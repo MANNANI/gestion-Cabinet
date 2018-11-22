@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/indexPatient.xhtml">
+        <ui:define name="body" >
+            <div class="container">
+                <h:form id="MedecinCreateForm" style="margin-top: 100px;" >
+                    <div class="row">
+                        <b:panel  style="width: 800px ;margin-left: 100px;">
+
+
+                            <b:image class="center-block"  value="../jesse-orrico-60373.jpg"  height="100px" width="100px" style="border-radius: 100%;" tooltip="#{userConnexionController.findPrenom()}"/>
+
+
+                            <b:inputText id="nom" value="#{adminController.selected.nom}" title="#{bundle.CreateAdminLabel_nom}" label="#{bundle.CreateAdminLabel_nom}"/>
+
+                            <b:inputText id="prenom" value="#{adminController.selected.prenom}" title="#{bundle.CreateAdminLabel_prenom}" label="#{bundle.CreateAdminLabel_prenom}"/>
+
+
+                            <b:inputText  id="tel" value="#{adminController.selected.email}" title="#{bundle.CreateAdminLabel_email}" label="#{bundle.CreateAdminLabel_email}"/>
+
+
+                            <b:inputText id="adresse" value="#{adminController.selected.tel}" title="#{bundle.CreateAdminLabel_tel}" label="#{bundle.CreateAdminLabel_tel}"/>
+
+
+                            <b:inputText id="cin" value="#{adminController.selected.cin}" title="#{bundle.CreateAdminLabel_cin}" label="#{bundle.CreateAdminLabel_cin}"/>
+                            
+                            <p:outputLabel value="#{bundle.CreateAdminLabel_dateNaissance}" /><br></br>
+                            <b:datepicker id="dateNaissance"  class="text-justify ui-widget "  value="#{adminController.selected.dateNaissance}" />
+
+                            <p:commandButton value="Edit" actionListener="#{adminController.update()}" class="btn btn-info col-lg-12" />
+                        </b:panel>
+                    </div>
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>
+

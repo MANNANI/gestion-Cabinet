@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ConfigurationViewDlg" widgetVar="ConfigurationViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewConfigurationTitle}">
+            <h:form id="ConfigurationViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{configurationController.selected != null}">
+                        <h:outputText value="#{bundle.ViewConfigurationLabel_heureDebut}"/>
+                        <h:outputText value="#{configurationController.selected.heureDebut}" title="#{bundle.ViewConfigurationTitle_heureDebut}">
+                            <f:convertDateTime pattern="HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewConfigurationLabel_heureFin}"/>
+                        <h:outputText value="#{configurationController.selected.heureFin}" title="#{bundle.ViewConfigurationTitle_heureFin}">
+                            <f:convertDateTime pattern="HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewConfigurationLabel_medecin}"/>
+                        <h:outputText value="#{configurationController.selected.medecin}" title="#{bundle.ViewConfigurationTitle_medecin}"/>
+                        <h:outputText value="#{bundle.ViewConfigurationLabel_pas}"/>
+                        <h:outputText value="#{configurationController.selected.pas}" title="#{bundle.ViewConfigurationTitle_pas}"/>
+                        <h:outputText value="#{bundle.ViewConfigurationLabel_id}"/>
+                        <h:outputText value="#{configurationController.selected.id}" title="#{bundle.ViewConfigurationTitle_id}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="ConfigurationViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

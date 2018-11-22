@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MargeItemEditDlg" widgetVar="MargeItemEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditMargeItemTitle}">
+            <h:form id="MargeItemEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{margeItemController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditMargeItemLabel_heureDebut}" for="heureDebut" />
+                        <p:calendar id="heureDebut" pattern="HH:mm:ss" value="#{margeItemController.selected.heureDebut}" title="#{bundle.EditMargeItemTitle_heureDebut}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditMargeItemLabel_margeBloquante}" for="margeBloquante" />
+                        <p:selectOneMenu id="margeBloquante" value="#{margeItemController.selected.margeBloquante}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{margeBloquanteController.itemsAvailableSelectOne}"
+                                           var="margeBloquanteItem"
+                                           itemValue="#{margeBloquanteItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditMargeItemLabel_heureFin}" for="heureFin" />
+                        <p:calendar id="heureFin" pattern="HH:mm:ss" value="#{margeItemController.selected.heureFin}" title="#{bundle.EditMargeItemTitle_heureFin}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditMargeItemLabel_jour}" for="jour" />
+                        <p:inputText id="jour" value="#{margeItemController.selected.jour}" title="#{bundle.EditMargeItemTitle_jour}" />
+                        <p:outputLabel value="#{bundle.EditMargeItemLabel_mois}" for="mois" />
+                        <p:inputText id="mois" value="#{margeItemController.selected.mois}" title="#{bundle.EditMargeItemTitle_mois}" />
+                        <p:outputLabel value="#{bundle.EditMargeItemLabel_annee}" for="annee" />
+                        <p:inputText id="annee" value="#{margeItemController.selected.annee}" title="#{bundle.EditMargeItemTitle_annee}" />
+                        <p:outputLabel value="#{bundle.EditMargeItemLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{margeItemController.selected.id}" title="#{bundle.EditMargeItemTitle_id}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{margeItemController.update}" value="#{bundle.Save}" update="display,:MargeItemListForm:datalist,:growl" oncomplete="handleSubmit(args, 'MargeItemEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="MargeItemEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

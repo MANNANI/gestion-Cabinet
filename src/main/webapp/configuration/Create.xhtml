@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ConfigurationCreateDlg" widgetVar="ConfigurationCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateConfigurationTitle}">
+            <h:form id="ConfigurationCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{configurationController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateConfigurationLabel_heureDebut}" for="heureDebut" />
+                        <p:calendar id="heureDebut" pattern="HH:mm:ss" value="#{configurationController.selected.heureDebut}" title="#{bundle.EditConfigurationTitle_heureDebut}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateConfigurationLabel_heureFin}" for="heureFin" />
+                        <p:calendar id="heureFin" pattern="HH:mm:ss" value="#{configurationController.selected.heureFin}" title="#{bundle.EditConfigurationTitle_heureFin}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateConfigurationLabel_medecin}" for="medecin" />
+                        <p:selectOneMenu id="medecin" value="#{configurationController.selected.medecin}" converter="medecinControllerConverter" >
+                              <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{medecinController.itemsAvailableSelectOne}"
+                                           var="medecinItem"
+                                           itemValue="#{medecinItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateConfigurationLabel_pas}" for="pas" />
+                        <p:inputText id="pas" value="#{configurationController.selected.pas}" title="#{bundle.CreateConfigurationTitle_pas}" />
+                        <p:outputLabel value="#{bundle.CreateConfigurationLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{configurationController.selected.id}" title="#{bundle.CreateConfigurationTitle_id}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{configurationController.create}" value="#{bundle.Save}" update="display,:ConfigurationListForm:datalist,:growl" oncomplete="handleSubmit(args,'ConfigurationCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ConfigurationCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

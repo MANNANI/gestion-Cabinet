@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DeviceCreateDlg" widgetVar="DeviceCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateDeviceTitle}">
+            <h:form id="DeviceCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{deviceController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateDeviceLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{deviceController.selected.id}" title="#{bundle.CreateDeviceTitle_id}" />
+                        <p:outputLabel value="#{bundle.CreateDeviceLabel_nom}" for="nom" />
+                        <p:inputText id="nom" value="#{deviceController.selected.nom}" title="#{bundle.CreateDeviceTitle_nom}" />
+                        <p:outputLabel value="#{bundle.CreateDeviceLabel_adresseMac}" for="adresseMac" />
+                        <p:inputText id="adresseMac" value="#{deviceController.selected.adresseMac}" title="#{bundle.CreateDeviceTitle_adresseMac}" />
+                        <p:outputLabel value="#{bundle.CreateDeviceLabel_adresseIP}" for="adresseIP" />
+                        <p:inputText id="adresseIP" value="#{deviceController.selected.adresseIP}" title="#{bundle.CreateDeviceTitle_adresseIP}" />
+                        <p:outputLabel value="#{bundle.CreateDeviceLabel_userConnexion}" for="userConnexion" />
+                        <p:selectOneMenu id="userConnexion" value="#{deviceController.selected.userConnexion}" >
+                            <f:selectItems value="#{userConnexionController.itemsAvailableSelectOne}"
+                                           var="userConnexionItem"
+                                           itemValue="#{userConnexionItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{deviceController.create}" value="#{bundle.Save}" update="display,:DeviceListForm:datalist,:growl" oncomplete="handleSubmit(args,'DeviceCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="DeviceCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

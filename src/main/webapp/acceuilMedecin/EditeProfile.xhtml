@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/indexPatient.xhtml">
+
+        <ui:define name="body">
+            <h:form id="MedecinCreateForm" class="form-group"  >
+                <div class="container-fluid">
+                    <div class="row">
+                        <b:panel class="col-lg-6 col-md-12 " style="margin: 20px 0 20px 0;">
+                            <p:graphicImage class="center-block" url="/image"   height="100px" width="100px" style="border-radius: 100%;"  />
+                            <b:inputText id="nom"  value="#{medecinController1.selected.nom}" title="#{bundle.CreateMedecinTitle_nom}"   label="#{bundle.CreateMedecinLabel_nom}"/>
+                            <b:inputText id="prenom"  value="#{medecinController1.selected.prenom}" title="#{bundle.CreateMedecinTitle_prenom}"   label="#{bundle.CreateMedecinLabel_prenom}"/>
+                            <p:outputLabel value="#{bundle.CreateMedecinLabel_dateNaissance}" /><br></br>
+                            <b:datepicker  id="dateNaissance" class="text-justify ui-widget "  value="#{medecinController1.selected.dateNaissance}" />
+                            <b:inputText   id="cin" value="#{medecinController1.selected.cin}" title="#{bundle.CreateMedecinTitle_cin}"   label="#{bundle.CreateMedecinLabel_cin}"/>
+                            <b:inputText  id="residence"  value="#{medecinController1.selected.residence}" label="#{bundle.CreateMedecinLabel_residence}"    />
+                            <b:inputText id="specialite"  value="#{medecinController1.selected.specialite}" label="#{bundle.CreateMedecinLabel_specialite}"   /> 
+                            <b:inputText   id="tel" value="#{medecinController1.selected.tel}" title="#{bundle.CreateMedecinTitle_tel}"  label="#{bundle.CreateMedecinLabel_tel}"/>
+                            <b:inputText   id="email" value="#{medecinController1.selected.email}" title="#{bundle.CreateMedecinTitle_email}"  label="#{bundle.CreateMedecinLabel_email}"/>
+                            <p:commandButton value="Edit" actionListener="#{medecinController1.update()}" class="btn btn-info col-lg-12" />
+                        </b:panel>
+                        <div class="col-lg-6 col-md-12">
+                            <b:panel style="float: left;" class="col-lg-12 col-md-12" tooltipPosition="left" look="info">
+                                <b:dataTable value="#{medecinController1.medecinSecretaireItems}" var="item" 
+                                             page-length="5"
+                                             page-length-menu="5,10,20"
+                                             >
+                                    <b:dataTableColumn value="#{item.nom} #{item.prenom}" label="Nom et Prenom"/>
+                                    <b:dataTableColumn value="#{item.tel}" />
+                                    <b:dataTableColumn value="#{item.cin}" />
+                                    <b:dataTableColumn value="#{item.email}" />
+                                </b:dataTable>
+                                <b:commandButton value="Gestion" action="/acceuilMedecin/GestionSec.xhtml" />
+                            </b:panel>
+                            <b:panel style="float: left;" class="col-lg-12 col-md-12" tooltipPosition="left" look="info">
+                                <div class="col-lg-12 col-md-12 config">
+                                    <h3 >Votre configuration</h3>
+                                    <p style="text-align: center; background-color: #eeeeee; " class="rounded">
+                                        l'heure de début #{medecinController1.configuration.heureDebut} -----> #{medecinController1.configuration.heureFin}<br></br>
+                                        durée de rdv est #{medecinController1.configuration.pas}
+                                    </p>
+                                </div>
+                            </b:panel>
+                            <b:panel id="NotePanel" style="float: left;"  class="col-lg-12 col-md-12">
+                                <h3>creer une note :</h3>
+                                <b:inputTextarea id="note" value="#{medecinController1.noteDesc}" label="Description"/>
+                                <p:commandButton class="btn btn-primary " icon="fa fa-save" id="creationNote" value="Save" actionListener="#{medecinController1.creationNote()}" update="NotePanel"/>
+                            </b:panel>
+                        </div>
+                    </div>
+                </div>
+            </h:form>
+
+
+        </ui:define>
+    </ui:composition>
+</html>
+

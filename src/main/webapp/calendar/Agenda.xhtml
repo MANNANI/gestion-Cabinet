@@ -1,0 +1,260 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Gestion des Rdvs"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <div style="float: left;">
+                <h:form id="Agenda">
+                    <p:growl id="messages" showDetail="true" />
+                    <h:panelGrid columnClasses="value">
+                        <h3 style="margin-top: 0">Gestion des Rdvs</h3>
+                        <p:schedule id="schedule" value="#{scheduleView.eventModel}" widgetVar="myschedule"  slotMinutes="#{scheduleView.medecinChoisis.configuration.pas}"   >
+                            <p:ajax event="dateSelect" listener="#{scheduleView.onDateSelect}" update="eventDetails"  />
+                            <p:ajax event="eventSelect" listener="#{scheduleView.onEventSelect}" update="eventInfoDetail" />
+                            <p:ajax event="eventMove" listener="#{scheduleView.onEventMove}" update="messages" />
+        <!--                    <p:ajax event="eventResize" listener="#{scheduleView.onEventResize}" update="messages" />-->
+                        </p:schedule>
+                    </h:panelGrid>
+                    <p:dialog widgetVar="eventDialog" header="Rendez vous creation" showEffect="clip" hideEffect="clip">
+                        <h:panelGrid id="eventDetails" columns="2">
+                            <p:outputLabel value="#{bundle.CreateRdvLabel_patient}" for="patient" />
+                            <p:selectOneMenu id="patient" value="#{scheduleView.patient.id}" >
+                                <f:selectItems value="#{patientController.itemsAvailableSelectOne}"
+                                               var="patientItem"
+                                               itemValue="#{patientItem.id}"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="#{bundle.CreateRdvLabel_dateDebut}" for="dateDebut" />
+                            <p:calendar stepMinute="#{scheduleView.medecinChoisis.configuration.pas}"   pattern="dd/MM/yyyy HH:mm:ss" id="dateDebut"  value="#{scheduleView.selected.dateDebut}" title="#{bundle.EditRdvTitle_dateDebut}" >
+                                <p:ajax event="dateSelect" process="dateDebut" listener="#{scheduleView.checkValiditeDate()}" update="test"/> 
+                            </p:calendar>
+
+                            <h:outputText id="test" value="#{scheduleView.message()}" styleClass="message" />  
+                            <p:commandButton id="recherche" icon="ui-icon-search" value="Consultation des rdvs"  oncomplete="PF('rdvInfo').show();" />
+                            <p:commandButton id="addButton" value="Save" actionListener="#{scheduleView.addEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
+                        </h:panelGrid>
+                    </p:dialog> 
+
+                    <p:dialog widgetVar="eventInfo" header="Modification de RDv" showEffect="clip" hideEffect="clip">
+                        <h:panelGrid id="eventInfoDetail" columns="2">
+                            <p:outputLabel for="from2" value="From:" />
+                            <p:calendar id="from2" stepMinute="#{scheduleView.medecinChoisis.configuration.pas}" value="#{scheduleView.event.startDate}" timeZone="GMT" pattern="dd/MM/yyyy HH:mm">
+                                <p:ajax process="from2" event="dateSelect" listener="#{scheduleView.setEventDateFin()}" update="to2"/>
+                            </p:calendar>
+                            <p:outputLabel for="to2" value="To:" />
+                            <p:calendar id="to2" stepMinute="#{scheduleView.medecinChoisis.configuration.pas}"  value="#{scheduleView.event.endDate}" timeZone="GMT" pattern="dd/MM/yyyy HH:mm"/>
+                            <p:outputLabel value="Patient:" for="patient2" />
+                            <p:inputText id="patient2" value="#{scheduleView.selected.patient}" title="patient" />
+                            <p:outputLabel value="Medecin:" for="medecin2" />
+                            <p:inputText id="medecin2" value="#{scheduleView.selected.medecin}" title="medecin" converter="medecinControllerConverter" />
+                            <p:commandButton id="modif" icon="ui-icon-pencil" value="Edit" actionListener="#{scheduleView.modifierEvent}" oncomplete="PF('myschedule').update();PF('eventInfo').hide();"/>
+                            <p:commandButton id="suppButton" icon="ui-icon-trash" value="Remove" actionListener="#{scheduleView.suppEvent}" oncomplete="PF('myschedule').update();PF('eventInfo').hide();" />
+                        </h:panelGrid>
+                    </p:dialog> 
+
+                    <p:dialog widgetVar="rdvInfo" header="consulation des rendez vous de.#{scheduleView.event.startDate}" showEffect="clip" hideEffect="clip">
+                        <h:panelGrid id="rdvDetail" columns="2">
+                        <h:form id="RdvListForm">
+                            <p:panel header="#{bundle.ListRdvTitle}">
+                                    <p:dataTable id="datalist" value="#{scheduleView.rdvs}" var="item"
+                                                 selectionMode="single" 
+                                                 paginator="true"
+                                                 rowKey="#{item.id}"
+                                                 rows="10"
+                                                 rowsPerPageTemplate="10,20,30,40,50"
+                                                 >
+                                        <!--<p:ajax event="rowSelect"   update="addButton viewButton  deleteButton"/>-->
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="#{bundle.ListRdvTitle_patient}"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.patient}"/>
+                                        </p:column>
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="#{bundle.ListRdvTitle_medecin}"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.medecin}"/>
+                                        </p:column>
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="#{bundle.ListRdvTitle_dateDebut}"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.dateDebut}">
+                                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                            </h:outputText>
+                                        </p:column>
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="#{bundle.ListRdvTitle_id}"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.id}"/>
+                                        </p:column>
+<!--                                        <f:facet name="footer">
+                                            <p:commandButton id="addButton" icon="ui-icon-plus"  value="Creer un Rdv" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
+                                            <p:commandButton id="viewButton" icon="ui-icon-search" value="Consultation des rdvs" actionListener="#{scheduleView.suppEvent}" oncomplete="PF('myschedule').update();PF('eventInfo').hide();" />
+                                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{rdvController.destroy}" update=":growl,datalist" disabled="#{empty rdvController.selected}"/>
+                                        </f:facet>-->
+                                    </p:dataTable>
+                 </p:panel>                   
+</h:form>
+
+                                    </h:panelGrid>
+                                    </p:dialog> 
+
+                            </h:form>
+                            </div>
+                            <div class="note">
+                                <!--            <h:form >
+                                                <p:outputLabel value="#{noteServiceController.selected.note}  FROM DR.#{noteServiceController.selected.medecin.nom}"></p:outputLabel> 
+                                
+                                            </h:form>-->
+                                <h:form >
+                                    <p:dataTable id="datalist" value="#{scheduleView.noteServices}" var="val"
+                                                 selectionMode="single" 
+                                                 paginator="true"
+                                                 paginatorPosition="bottom"
+                                                 rowKey="#{val.id}"
+
+                                                 rows="5"
+                                                 rowsPerPageTemplate="10,20,30,40,50"
+                                                 >
+                                        <p:column class="styless">
+                                            <f:facet name="header">
+                                                <h:outputText value="#{bundle.ListNoteServiceTitle_note}"/>
+                                            </f:facet>
+                                            <h:outputText value="#{val.note}"/>
+
+                                        </p:column>
+
+                                        <p:column class="styless">
+                                            <f:facet name="header">
+                                                <h:outputText value="From"/>
+                                            </f:facet>
+                                            <h:outputText value="Dr.#{val.medecin.nom}"/>
+                                        </p:column>
+                                        <f:facet name="footer">
+                                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" update=":MargeBloquanteCreateForm" oncomplete="PF('MargeBloquanteCreateDialog').show()"/>
+                                        </f:facet>
+                                    </p:dataTable>
+                                </h:form>
+                                <br></br>
+                                <br></br>
+                                <h:outputText value="La liste des patients est :" styleClass="styleListPatient"/>
+                                <br></br>
+                                <br></br>
+
+                                <h:form id="PatientListForm" rendered="#{scheduleView.medecinChoisis!=null}" >
+                                    <p:panel header="#{bundle.ListPatientTitle}">
+                                        <p:dataTable id="datalist" value="#{scheduleView.patients}" var="item"
+                                                     selectionMode="single" 
+                                                     paginator="true"
+                                                     rowKey="#{item.id}"
+                                                     rows="10"
+                                                     rowsPerPageTemplate="10,20,30,40,50"
+                                                     >
+                                            <p:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="#{bundle.ListPatientTitle_cin}"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.cin}"/>
+                                            </p:column>
+
+                                            <p:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="#{bundle.ListPatientTitle_nom}"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.nom}"/>
+                                            </p:column>
+                                            <p:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="#{bundle.ListPatientTitle_prenom}"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.prenom}"/>
+                                            </p:column>
+                                            <p:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="#{bundle.ListPatientTitle_gender}"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.gender}"/>
+                                            </p:column>
+                                            <p:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="#{bundle.ListPatientTitle_dateNaissance}"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.dateNaissance}">
+                                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                                </h:outputText>
+                                            </p:column>
+
+                                        </p:dataTable>
+                                    </p:panel>
+                                </h:form>
+
+
+                            </div>
+
+                            <style type="text/css">
+                                .value {
+                                    width: 1000px;
+                                }
+                                .colorRdv{
+                                    background-color: aqua;
+                                }
+                                .EventBloque{
+                                    background-color: red;
+
+                                }
+                                .styleCss{
+                                    background-color: yellow;
+
+                                }
+                                .fc-day .ui-layout-unit-content{
+                                    background-color: blue;
+                                }
+                                .fc-day24{
+                                    background-color: blue;
+                                }
+                                .note{
+
+                                    position: fixed;
+                                    margin-left: 75%;
+                                    width: 22%;
+                                    height:100px;
+                                    margin-top: 10%;
+                                }
+                                .styless{
+                                    background-color: #ffffcc;
+                                    border-left: 6px solid #ffeb3b;
+                                }
+                                .fc-day .ui-layout-unit-content{
+                                    background-color: blue;
+                                }
+                                .message{
+                                    font-size: small;
+                                    color: red;
+
+                                }
+                                .eventNonBloque{
+                                    background-color: orange;  
+                                }
+                                .styleListPatient{
+                                    font-size: large;
+                                    color: green;
+                                }
+                            </style>
+                            <ui:include src="CreerMargeBl.xhtml"/>
+                            </ui:define>
+                            </ui:composition>
+
+
+
+
+                            </html>
+

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EmployeViewDlg" widgetVar="EmployeViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewEmployeTitle}">
+            <h:form id="EmployeViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{employeController.selected != null}">
+                        <h:outputText value="#{bundle.ViewEmployeLabel_dateNaissance}"/>
+                        <h:outputText value="#{employeController.selected.dateNaissance}" title="#{bundle.ViewEmployeTitle_dateNaissance}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewEmployeLabel_cin}"/>
+                        <h:outputText value="#{employeController.selected.cin}" title="#{bundle.ViewEmployeTitle_cin}"/>
+                        <h:outputText value="#{bundle.ViewEmployeLabel_tel}"/>
+                        <h:outputText value="#{employeController.selected.tel}" title="#{bundle.ViewEmployeTitle_tel}"/>
+                        <h:outputText value="#{bundle.ViewEmployeLabel_email}"/>
+                        <h:outputText value="#{employeController.selected.email}" title="#{bundle.ViewEmployeTitle_email}"/>
+                        <h:outputText value="#{bundle.ViewEmployeLabel_nom}"/>
+                        <h:outputText value="#{employeController.selected.nom}" title="#{bundle.ViewEmployeTitle_nom}"/>
+                        <h:outputText value="#{bundle.ViewEmployeLabel_prenom}"/>
+                        <h:outputText value="#{employeController.selected.prenom}" title="#{bundle.ViewEmployeTitle_prenom}"/>
+                        <h:outputText value="#{bundle.ViewEmployeLabel_id}"/>
+                        <h:outputText value="#{employeController.selected.id}" title="#{bundle.ViewEmployeTitle_id}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="EmployeViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

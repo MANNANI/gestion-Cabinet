@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
+
+    <ui:composition template="/indexPatient.xhtml">
+        <ui:define name="body">
+
+            <div class="col-lg-12 col-md-12">
+                <b:panel id="MargeNonBloquanteListForm" style="float: left;margin-top: 20px;" class="col-lg-12 col-md-12" tooltipPosition="left" look="info">
+                    <h2 >La Liste des marges Non bloquantes :</h2>
+
+                    <b:dataTable value="#{margeNonBloquanteController.items}" var="item" 
+                                 page-length="5"
+                                 page-length-menu="5,10,20"
+                                 >
+                        <b:dataTableColumn value="#{item.id}"/>
+                        <b:dataTableColumn value="#{item.dateDebut}" />
+                        <b:dataTableColumn value="#{item.dateFin}" />
+                        <b:dataTableColumn value="#{item.medecin}" />
+
+
+                    </b:dataTable>
+                    <p:commandButton id="delet" icon="ui-icon-plus" class="btn btn-primary col-lg-2" value="delet" actionListener="#{margeNonBloquanteController.destroy}" />
+                    <p:commandButton id="createButton" class="btn btn-primary col-lg-2" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{margeNonBloquanteController.prepareCreate}" update=":MargeNonBloquanteCreateForm" oncomplete="PF('MargeNonBloquanteCreateDialog').show()"/>
+
+
+                </b:panel>
+
+
+            </div>
+
+ <ui:include src="CreateMargeNonBl.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>

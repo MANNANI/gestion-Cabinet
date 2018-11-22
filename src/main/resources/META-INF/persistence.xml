@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="com.mycompany_ProjetAgenda_war_1.0-SNAPSHOTPU" transaction-type="JTA">
+    <jta-data-source>java:app/ProjetAgenda</jta-data-source>
+    <class>bean.Admin</class>
+    <class>bean.AdminSecretaire</class>
+    <class>bean.Configuration</class>
+    <class>bean.Country</class>
+    <class>bean.Demande</class>
+    <class>bean.Device</class>
+    <class>bean.Employe</class>
+    <class>bean.Marge</class>
+    <class>bean.MargeBloquante</class>
+    <class>bean.MargeItem</class>
+    <class>bean.MargeNonBloquante</class>
+    <class>bean.Medecin</class>
+    <class>bean.MedecinSecretaire</class>
+    <class>bean.NoteService</class>
+    <class>bean.Patient</class>
+    <class>bean.Rdv</class>
+    <class>bean.Residence</class>
+    <class>bean.Specialite</class>
+    <class>bean.UserConnexion</class>
+    <class>bean.Vacance</class>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+    <properties>
+      <property name="javax.persistence.schema-generation.database.action" value="create"/>
+    </properties>
+  </persistence-unit>
+</persistence>

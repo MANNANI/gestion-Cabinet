@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ResidenceViewDlg" widgetVar="ResidenceViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewResidenceTitle}">
+            <h:form id="ResidenceViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{residenceController.selected != null}">
+                        <h:outputText value="#{bundle.ViewResidenceLabel_id}"/>
+                        <h:outputText value="#{residenceController.selected.id}" title="#{bundle.ViewResidenceTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewResidenceLabel_pays}"/>
+                        <h:outputText value="#{residenceController.selected.pays}" title="#{bundle.ViewResidenceTitle_pays}"/>
+                        <h:outputText value="#{bundle.ViewResidenceLabel_ville}"/>
+                        <h:outputText value="#{residenceController.selected.ville}" title="#{bundle.ViewResidenceTitle_ville}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="ResidenceViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

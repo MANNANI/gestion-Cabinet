@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <p:dialog id="modifierPassWordDia" widgetVar="CompteModifierDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ModifierUserPasswordTitle}">
+            <h:form id="modifierPassWord">
+                <h:panelGroup id="display1">
+                    <p:panelGrid columns="2" rendered="#{userConnexionController.selected!= null}">
+                        
+                        <p:outputLabel value="#{bundle.CreateUserConnexionLabel_password}" for="password" />
+                        <p:password id="password" value="#{userConnexionController.selected.password}" title="#{bundle.CreateUserConnexionTitle_password}" />
+                        
+                        <p:outputLabel value="confirmer" for="password1" />
+                        <p:password id="password1" value="#{userConnexionController.nvPW}"  />
+                    </p:panelGrid>
+                    <p:commandButton action="#{userConnexionController.modifier}" value="#{bundle.Modifier}" update="display1,:modifierPassWord" oncomplete="handleSubmit(args,'CompteModifierDialog');"/>
+                    
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </h:body>
+</html>
+

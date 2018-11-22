@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MargeItemViewDlg" widgetVar="MargeItemViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewMargeItemTitle}">
+            <h:form id="MargeItemViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{margeItemController.selected != null}">
+                        <h:outputText value="#{bundle.ViewMargeItemLabel_heureDebut}"/>
+                        <h:outputText value="#{margeItemController.selected.heureDebut}" title="#{bundle.ViewMargeItemTitle_heureDebut}">
+                            <f:convertDateTime pattern="HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewMargeItemLabel_margeBloquante}"/>
+                        <h:outputText value="#{margeItemController.selected.margeBloquante}" title="#{bundle.ViewMargeItemTitle_margeBloquante}"/>
+                        <h:outputText value="#{bundle.ViewMargeItemLabel_heureFin}"/>
+                        <h:outputText value="#{margeItemController.selected.heureFin}" title="#{bundle.ViewMargeItemTitle_heureFin}">
+                            <f:convertDateTime pattern="HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewMargeItemLabel_jour}"/>
+                        <h:outputText value="#{margeItemController.selected.jour}" title="#{bundle.ViewMargeItemTitle_jour}"/>
+                        <h:outputText value="#{bundle.ViewMargeItemLabel_mois}"/>
+                        <h:outputText value="#{margeItemController.selected.mois}" title="#{bundle.ViewMargeItemTitle_mois}"/>
+                        <h:outputText value="#{bundle.ViewMargeItemLabel_annee}"/>
+                        <h:outputText value="#{margeItemController.selected.annee}" title="#{bundle.ViewMargeItemTitle_annee}"/>
+                        <h:outputText value="#{bundle.ViewMargeItemLabel_id}"/>
+                        <h:outputText value="#{margeItemController.selected.id}" title="#{bundle.ViewMargeItemTitle_id}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="MargeItemViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

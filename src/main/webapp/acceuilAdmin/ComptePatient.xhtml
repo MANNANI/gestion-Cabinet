@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
+
+    <ui:composition template="/indexPatient.xhtml">
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListPatientTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form  id="recherche" style="margin-top: 100px;">
+                <b:panel id="display">
+                    <b:panelGrid columns="2" >
+                        <b:selectOneMenu  value="#{patientController.etat}"   >
+                            <f:selectItem value=""  itemLabel="--selected--"/>
+                            <f:selectItem value="Bloquer"  itemLabel="Bloquer"/>
+                            <f:selectItem value="NonBloquer"   itemLabel="Non Bloquer"/>
+                        </b:selectOneMenu>
+                        <b:commandButton actionListener="#{patientController.listEtat()}" value="Rechercher"  update=":PatientListForm "/>
+                        <!--<b:commandButton actionListener="" value="Rechercher"  update=":AdminSecretaireListForm "/>-->
+
+                    </b:panelGrid>
+                </b:panel>
+            </h:form>
+            <h:form id="PatientListForm">
+                <p:panel header="#{bundle.ListPatientTitle}">
+                    <p:dataTable id="datalist" value="#{patientController.items}" var="item"
+                                 selectionMode="single" selection="#{patientController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.id}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPatientTitle_nom}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nom}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPatientTitle_prenom}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.prenom}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPatientTitle_cin}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.cin}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPatientTitle_adresse}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.adresse}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPatientTitle_gender}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.gender}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPatientTitle_dateNaissance}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.dateNaissance}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Etat"/>
+                            </f:facet>
+                            <p:commandButton value="#{(item.userConnexion.blocked==0)?'Bloquer':'Debloquer'}" actionListener="#{patientController.bloquerDebloquer()}" />
+                        </p:column>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+        </ui:define>
+    </ui:composition>
+
+</html>

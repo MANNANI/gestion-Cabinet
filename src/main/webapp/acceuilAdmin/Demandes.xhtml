@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/indexPatient.xhtml">
+
+        <ui:define name="body" >
+            <h:form id="DemandeListForm" >
+              
+                    <p:dataTable id="datalist" value="#{demandeController.items}" var="item"
+                                 selectionMode="single" selection="#{demandeController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.id}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDemandeTitle_nom}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nom}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDemandeTitle_prenom}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.prenom}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDemandeTitle_fonction}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.fonction}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDemandeTitle_email}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.email}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Creation des comptes"/>
+                            </f:facet>
+                            <p:commandButton value="confirmer" actionListener="#{demandeController.confirmerDemande(item)}" update=":DemandeListForm" />
+                            <p:commandButton value="annuler" actionListener="#{demandeController.annulerDemande(item)}" update=":DemandeListForm" />
+                        </p:column>
+
+                    </p:dataTable>
+               
+            </h:form>
+
+
+  <style type="text/css">
+                .fc{
+                    background-color: #cbd8ed;
+                    /*                    color: #1C4A5A;*/
+                    /*                    font-family: 'Cursive', sans-serif;*/
+                }
+                .souligne
+                {
+                    text-decoration: underline ;
+                    font-family: Comic Sans MS;
+                    color: #092047;
+                    right: 300px;
+                }
+                .ui-datatable{
+                    border-style: groove;
+                    border-color: #1C4A5A;
+                    border-radius: 12px;
+                    color: #1C4A5A;
+                    font-family: 'Cursive', sans-serif;
+                }
+                .ui-dialog{
+                    border-style: double;
+                    border-color: #00733e;
+                    border-radius: 12px;  
+                }
+                .ui-dialog-titlebar{
+                    background-color: #0cb8b6;
+                    color: #1C4A5A;
+                    font-family: 'Cursive', sans-serif;
+                    -webkit-border-radius: 1em;
+                }
+                .ui-button{
+                   background-color: #0cb8b6;  
+                   color: #1C4A5A;
+                    font-family: 'Cursive', sans-serif;
+                    -webkit-border-radius: 1em;
+                }
+                .b{
+                    background-color: #4a6087;
+                }
+                .ui-paginator{
+                    background-color: #0cb8b6;  
+                   color: #1C4A5A;
+                    font-family: 'Cursive', sans-serif;
+                    
+                }
+                
+
+
+
+            </style>
+
+
+        </ui:define>
+
+    </ui:composition>
+
+</html>

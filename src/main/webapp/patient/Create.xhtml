@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PatientCreateDlg" widgetVar="PatientCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreatePatientTitle}">
+            <h:form id="PatientCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{patientController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreatePatientLabel_gender}" for="gender" />
+                        <p:inputText id="gender" value="#{patientController.selected.gender}" title="#{bundle.CreatePatientTitle_gender}" />
+                        <p:outputLabel value="#{bundle.CreatePatientLabel_dateNaissance}" for="dateNaissance" />
+                        <p:calendar id="dateNaissance" pattern="MM/dd/yyyy" value="#{patientController.selected.dateNaissance}" title="#{bundle.EditPatientTitle_dateNaissance}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreatePatientLabel_nom}" for="nom" />
+                        <p:inputText id="nom" value="#{patientController.selected.nom}" title="#{bundle.CreatePatientTitle_nom}" />
+                        <p:outputLabel value="#{bundle.CreatePatientLabel_prenom}" for="prenom" />
+                        <p:inputText id="prenom" value="#{patientController.selected.prenom}" title="#{bundle.CreatePatientTitle_prenom}" />
+                        <p:outputLabel value="#{bundle.CreatePatientLabel_cin}" for="cin" />
+                        <p:inputText id="cin" value="#{patientController.selected.cin}" title="#{bundle.CreatePatientTitle_cin}" />
+                        <p:outputLabel value="#{bundle.CreatePatientLabel_adresse}" for="adresse" />
+                        <p:inputText id="adresse" value="#{patientController.selected.adresse}" title="#{bundle.CreatePatientTitle_adresse}" />
+                        <p:outputLabel value="#{bundle.CreatePatientLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{patientController.selected.id}" title="#{bundle.CreatePatientTitle_id}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{patientController.create}" value="#{bundle.Save}" update="display,:PatientListForm:datalist,:growl" oncomplete="handleSubmit(args,'PatientCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="PatientCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

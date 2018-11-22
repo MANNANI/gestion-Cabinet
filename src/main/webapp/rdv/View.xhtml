@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RdvViewDlg" widgetVar="RdvViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewRdvTitle}">
+            <h:form id="RdvViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{rdvController.selected != null}">
+                        <h:outputText value="#{bundle.ViewRdvLabel_patient}"/>
+                        <h:outputText value="#{rdvController.selected.patient}" title="#{bundle.ViewRdvTitle_patient}"/>
+                        <h:outputText value="#{bundle.ViewRdvLabel_medecin}"/>
+                        <h:outputText value="#{rdvController.selected.medecin}" title="#{bundle.ViewRdvTitle_medecin}"/>
+                        <h:outputText value="#{bundle.ViewRdvLabel_dateDebut}"/>
+                        <h:outputText value="#{rdvController.selected.dateDebut}" title="#{bundle.ViewRdvTitle_dateDebut}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewRdvLabel_id}"/>
+                        <h:outputText value="#{rdvController.selected.id}" title="#{bundle.ViewRdvTitle_id}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="RdvViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

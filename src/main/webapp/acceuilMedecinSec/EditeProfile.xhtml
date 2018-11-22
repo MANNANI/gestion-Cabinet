@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui">
+    <ui:composition template="/indexPatient.xhtml">
+
+
+        <ui:define name="body">
+            <h:form id="MedecinCreateForm" class="form-group"  >
+                <div class="container" >
+                    <div class="row" style="margin: 50px 50px 50px 50px;">
+                        <b:panel >
+                            <p:graphicImage class="center-block" url="/image"   height="100px" width="100px" style="border-radius: 100%;"  />
+                            <b:inputText id="nom" disabled="true" value="#{medecinSecretaireController.selected.nom}" title="#{bundle.CreateMedecinTitle_nom}"   label="#{bundle.CreateMedecinLabel_nom}"/>
+                            <b:inputText id="prenom" value="#{medecinSecretaireController.selected.prenom}" title="#{bundle.CreateMedecinTitle_prenom}"   label="#{bundle.CreateMedecinLabel_prenom}"/>
+                            <p:outputLabel value="#{bundle.CreateMedecinLabel_dateNaissance}" /><br></br>
+                            <b:datepicker id="dateNaissance" class="text-justify ui-widget "  value="#{medecinSecretaireController.selected.dateNaissance}" />
+                            <b:inputText id="cin" value="#{medecinSecretaireController.selected.cin}" title="#{bundle.CreateMedecinTitle_cin}"   label="#{bundle.CreateMedecinLabel_cin}"/>
+                            <b:inputText id="tel" value="#{medecinSecretaireController.selected.tel}" title="#{bundle.CreateMedecinTitle_tel}"  label="#{bundle.CreateMedecinLabel_tel}"/>
+                            <b:inputText id="email" value="#{medecinSecretaireController.selected.email}" title="#{bundle.CreateMedecinTitle_email}"  label="#{bundle.CreateMedecinLabel_email}"/>
+                            <p:commandButton value="Edit" actionListener="#{medecinSecretaireController.update()}" class="btn btn-info col-lg-12" />
+                        </b:panel>
+                    </div>
+                </div>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+

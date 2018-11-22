@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/indexPatient.xhtml">
+
+        <ui:define name="body"> 
+
+            <h:form >
+                <h1><h:outputText value="List des medecins"/></h1>
+
+                <p:dataTable id="tbl" value="#{medecinController1.items}" var="item" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                             paginator="true" rows="10" style="margin:20px 20px 20px 20px;">
+                    <f:facet name="{Exporters}">
+                        <h:commandLink>
+                            <p:graphicImage name="/img/xml.png" width="24"/>
+                            <p:dataExporter type="xls" target="tbl" fileName="ListMedecin" />
+                        </h:commandLink>
+
+                        <h:commandLink>
+                            <p:graphicImage name="/img/pdf.png" width="24"/>
+                            <p:dataExporter type="pdf" target="tbl" fileName="ListMedecin"/>
+                        </h:commandLink>
+
+                    </f:facet>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Id"/>
+                        </f:facet>
+                        <h:outputText value="#{item.id}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Nom"/>
+                        </f:facet>
+                        <h:outputText value="#{item.nom} #{item.prenom}"/>
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Specialite"/>
+                        </f:facet>
+                        <h:outputText value="#{item.specialite}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Residence"/>
+                        </f:facet>
+                        <h:outputText value="#{item.residence}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Configuration"/>
+                        </f:facet>
+                        <h:outputText value="#{item.configuration.pas}min"/>
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Email"/>
+                        </f:facet>
+                        <h:outputText value="#{item.email}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="patients"/>
+                        </f:facet>
+                        <p:commandButton id="patientsMedecin" value="" icon="ui-icon-search" actionListener="#{medecinController1.patientsDetail(item)}" title="List patients" update=":patientList"/>
+                    </p:column>
+
+
+                </p:dataTable>
+            </h:form>
+
+
+            <h:form id="patientList">
+                <h1><h:outputText value="List des patients"/></h1>
+                <p:dataTable id="datalist1" value="#{medecinController1.patient}" var="item" 
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                             paginator="true" rows="10" style="margin:20px 20px 20px 20px;">
+                    <f:facet name="{Exporters}">
+                        <h:commandLink>
+                            <p:graphicImage name="/img/xml.png" width="24"/>
+                            <p:dataExporter type="xls" target="datalist1" fileName="ListPatient" />
+                        </h:commandLink>
+
+                        <h:commandLink>
+                            <p:graphicImage name="/img/pdf.png" width="24"/>
+                            <p:dataExporter type="pdf" target="datalist1" fileName="ListPatient"/>
+                        </h:commandLink>
+
+                    </f:facet>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Nom"/>
+                        </f:facet>
+                        <h:outputText value="#{item.nom} #{item.prenom}"/>
+                    </p:column>
+                    <p:column >
+                        <f:facet name="header">
+                            <h:outputText value="Gender"/>
+                        </f:facet>
+                        <h:outputText value="#{item.gender}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="DateNaissance"/>
+                        </f:facet>
+                        <h:outputText value="#{item.dateNaissance}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Adresse"/>
+                        </f:facet>
+                        <h:outputText value="#{item.adresse}"/>
+                    </p:column>
+
+                </p:dataTable>
+            </h:form>
+
+        </ui:define>
+    </ui:composition>
+</html>
+

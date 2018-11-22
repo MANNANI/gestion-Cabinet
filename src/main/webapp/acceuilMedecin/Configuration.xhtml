@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
+
+    <ui:composition template="/indexPatient.xhtml">
+
+        <ui:define name="body">
+            <h:form id="ConfigurationListForm">
+
+                <b:panel style="float: left;" class="col-lg-12 col-md-12" tooltipPosition="left" look="info">
+                    <div class="col-lg-12 col-md-12 config">
+                        <h3 >Votre configuration :</h3>
+                        <br></br>
+                        <br></br>
+                        <p style="text-align: center; background-color: #eeeeee; " class="rounded">
+                            <br></br>
+                            l'heure de début #{configurationController.selected.heureDebut} -----> #{configurationController.selected.heureFin}<br></br>
+                            durée de rdv est #{configurationController.selected.pas}
+                            <br></br>
+                        </p>
+                    </div>
+                     <br></br>
+                     <br></br>
+                     <br></br>
+                     <br></br>
+                     <br></br>
+                    <p:commandButton id="editButton" style="margin-left: 700px;width: 250px;"  value="Edit"  update=":ConfigurationEditForm"   oncomplete="PF('ConfigurationEditDialog').show()"/>
+                </b:panel>
+            </h:form>
+
+            <p:dialog id="ConfigurationEditDlg" widgetVar="ConfigurationEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditConfigurationTitle}">
+                <h:form id="ConfigurationEditForm">
+                    <b:panel id="display">
+                       
+                            <b:label text="Heure d'ouverture de votre cabinet :"  />
+                            <b:dateTimePicker show-time="" value="#{configurationController.selected.heureDebut}" />
+                           <b:label text="Heure de fermeture de votre cabinet :"  />
+                           <b:dateTimePicker value="#{configurationController.selected.heureFin}" />
+                            <b:label text="Votre pas entre les rendez vous :"  />
+                            <b:inputText id="pas" value="#{configurationController.selected.pas}" title="#{bundle.EditConfigurationTitle_pas}" />
+                     
+                        <p:commandButton actionListener="#{configurationController.update}" value="#{bundle.Save}" update=":ConfigurationListForm" oncomplete="handleSubmit(args,'ConfigurationEditDialog');"/>
+                        <p:commandButton value="#{bundle.Cancel}" onclick="ConfigurationEditDialog.hide()"/>
+                    </b:panel>
+                </h:form>
+            </p:dialog>
+        </ui:define>
+
+    </ui:composition>
+
+</html>

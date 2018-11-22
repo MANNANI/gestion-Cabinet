@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui">
+    <ui:composition template="/indexPatient.xhtml">
+        <ui:define name="body" >     
+            <div class="container-fluid">
+                <h:form id="PatientCreateForm" enctype="multipart/form-data" >
+                    <b><u>Modifier les information Personnelle</u></b>
+                    <b:panel  style="margin: 20px 0 20px 0;" class="well">
+                        <div class="row ">
+                            <div class="col-lg-4">
+                                <h:graphicImage class="center-block" id="image" alt="uploaded image" url="/image" height="100px" width="100px" style="border-radius: 100%;" />
+                            </div>    
+                            <div class="col-lg-8">
+                                <p:fileUpload allowTypes="/(\.|\/)(gif|jpe?g|png)$/" fileUploadListener="#{fileUploadController.handleFileUpload}"   class="col-lg-12 btn btn-default"  />
+                            </div>    
+
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <b:inputText id="nom" value="#{patientController.selected.nom}" title="#{bundle.CreatePatientTitle_nom}" label="#{bundle.CreatePatientLabel_nom}"/>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <b:inputText id="prenom" value="#{patientController.selected.prenom}" title="#{bundle.CreatePatientTitle_prenom}" label="#{bundle.CreatePatientLabel_prenom}"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <p:outputLabel value="#{bundle.CreateMedecinLabel_dateNaissance}" /><br></br>
+                                <b:datepicker  id="dateNaissance" value="#{patientController.selected.dateNaissance}"/>
+                            </div>
+                            <div class="col-lg-6">
+                                <b:inputText id="adresse" value="#{patientController.selected.adresse}" title="#{bundle.CreatePatientTitle_adresse}" label="#{bundle.CreatePatientLabel_adresse}"/>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-lg-6">
+                                <b:inputText id="cin" value="#{patientController.selected.cin}" title="#{bundle.CreatePatientTitle_cin}" label="#{bundle.CreatePatientLabel_cin}"/>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <b:inputText id="gender" value="#{patientController.selected.gender}" title="#{bundle.CreatePatientTitle_gender}" label="#{bundle.CreatePatientLabel_gender}"/>
+                            </div>
+                        </div>
+
+
+
+                        <p:commandButton value="Edit" actionListener="#{patientController.update()}" class="btn btn-info col-lg-12" />
+
+                    </b:panel>
+                    <hr ></hr>
+                    <b><u>Modifier les information de compte:</u></b>
+                    <b:panel  style="margin: 20px 0 20px 0;" class="well">
+                        <div class="row">
+                            <b:inputSecret  id="Apassword" value="#{patientController.anciennePassword}" title="#{bundle.CreateUserConnexionTitle_password}" label="ancienne mot de pass"/>
+                            <b:inputSecret id="Npassword" value="#{patientController.nouveauPassword}" title="#{bundle.CreateUserConnexionTitle_password}" label="nouveau mot de pass"/>
+                            <b:inputSecret id="Cpassword" value="#{patientController.confirmationDeNouveauPassword}" title="#{bundle.CreateUserConnexionTitle_password}" label="confirmation de mot de pass"/>
+
+                            <p:commandButton id="save"  class="btn btn-info col-lg-12" value="Save" actionListener="#{patientController.changePasseWord()}" />
+
+
+                        </div>
+                    </b:panel>
+                </h:form>
+            </div>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,374 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+
+        <meta charset="UTF-8"/>
+        <title>AdminLTE 2 | Dashboard</title>
+        <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'/>
+        <!-- Bootstrap 3.3.2 -->
+        <h:outputStylesheet name="bootstrap/css/bootstrap.min.css" />    
+        <!-- FontAwesome 4.3.0 -->
+        <h:outputStylesheet name="houda/font-awesome-4.3.0/css/font-awesome.css"/>
+        <!-- Ionicons 2.0.0 -->
+        <h:outputStylesheet name="ionicons-2.0.1/css/ionicons.min.css" />
+        <!-- Theme style -->
+        <h:outputStylesheet name="dist/css/AdminLTE.min.css"  />
+
+        <h:outputStylesheet name="dist/css/skins/skin-blue.css"  />
+
+    </h:head>
+    <h:body onload="acces();PF('passwordDialog').show()" class="skin-blue">
+        <div class="wrapper">
+            <header class="main-header" >
+                <!-- Logo -->
+                <a style="height: 88px;" href="../projet/PageCo.xhtml" class="logo">
+                    <p:graphicImage value="/resources/med/img/logo.png"  style="width: 140px;" />
+                </a>
+                <!-- Header Navbar: style can be found in header.less -->
+                <nav style="height: 88px;" class="navbar navbar-static-top" role="navigation">
+                    <div class="navbar-custom-menu">
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown user user-menu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="width:180px;height: 88px;">
+                                        ²<p:graphicImage url="/image" id="image"  height="70px" width="70px" class="img-circle" />
+                                    <span class="hidden-xs">&nbsp; #{userConnexionController.find()}</span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <!-- User image -->
+                                    <li class="user-header">
+                                        <p:graphicImage url="/image"   class="img-circle"/>
+                                        <p>
+                                            #{userConnexionController.find()}  &nbsp; #{userConnexionController.findPrenom()} - #{userConnexionController.fonction()}
+                                            <small>Member depuis #{userConnexionController.findDateInscription()}  </small>
+                                        </p>
+                                    </li>
+                                    <!-- Menu Footer-->
+                                    <li class="user-footer">
+                                        <div class="pull-left" id="ProfileAdmin">
+                                            <p:commandButton icon="ui-icon-person" value="Profile" action="/acceuilAdmin/Profile?faces-redirect=true"/>
+                                        </div>
+                                        <div class="pull-left" id="ProfileMedecin">
+                                            <p:commandButton icon="ui-icon-person" value="Profile" action="/acceuilMedecin/Profile?faces-redirect=true"/>
+                                        </div>
+                                        <div class="pull-left" id="ProfilePatient">
+                                            <p:commandButton icon="ui-icon-person" value="Profile" action="/acceuilPatient/Profile?faces-redirect=true"/>
+                                        </div>
+                                        <div class="pull-left" id="ProfileSecMed">
+                                            <p:commandButton icon="ui-icon-person" value="Profile" action="/acceuilMedecinSec/Profile?faces-redirect=true"/>
+                                        </div>
+                                        <div class="pull-left" id="ProfileSecAdmin">
+                                            <p:commandButton icon="ui-icon-person" value="Profile" action="/acceuilAdminSec/Profile?faces-redirect=true"/>
+                                        </div>
+                                        <div class="pull-right" >
+                                            <p:commandButton icon="ui-icon-power" value="Sign out" action="#{userConnexionController.deconnection()}"/>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </header>
+
+            <aside class="main-sidebar">
+                <!-- sidebar: style can be found in sidebar.less -->
+                <section class="sidebar" >
+                    <!-- Sidebar user panel -->
+                    <!--                    <div class="user-panel">
+                                            <div class="pull-left image">
+                                                <p:graphicImage value="/resources/dist/img/user2-160x160.jpg" class="img-circle"/>
+                                                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
+                                            </div>
+                                            <div class="pull-left info">
+                                                <p>Alexander Pierce</p>
+                    
+                                                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                                            </div>
+                                        </div>-->
+                    <!-- search form -->
+                    <!--          <form action="#" method="get" class="sidebar-form">
+                                <div class="input-group">
+                                  <input type="text" name="q" class="form-control" placeholder="Search..."/>
+                                  <span class="input-group-btn">
+                                    <button type='submit' name='search' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
+                                  </span>
+                                </div>
+                              </form>-->
+                    <!-- /.search form -->
+                    <!-- sidebar menu: : style can be found in sidebar.less -->
+                    <style>
+                        .animationStyle{
+                            animation-name: agendaAnimaatin;
+                            animation-duration: 6s;
+                            animation-iteration-count: 1;
+                        }
+                        @keyframes agendaAnimaatin {
+                            0%   {opacity: 0;}
+                            10%   {opacity: 0;}
+                            20%   {opacity: 0;}
+                            30%   {opacity: 0.3;}
+                            40%   {opacity: 0.4;}
+                            50%   {opacity: 0.5;}
+                            60%   {opacity: 0.6;}
+                            70%   {opacity: 0.7;}
+                            80%   {opacity: 0.8;}
+                            90%   {opacity: 0.9;}
+                            100%   {opacity: 1;}
+                        }
+                    </style>
+
+                    <!--Admin Menu--> 
+                    <h:form rendered="#{(userConnexionController.fonction()=='Admin')?true:false}">
+                        <ul class="sidebar-menu animationStyle">
+                            <li class="header">MAIN NAVIGATION</li>
+                            <li class="treeview" id="GestionSecAdmin">
+                                <a href="#">
+                                    <i class="fa fa-folder"></i> <span>Gestion des comptes</span>
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a href="../acceuilAdmin/CompteEmps.xhtml"><i class="fa fa-circle-o"></i>Employe</a></li>
+                                    <li><a href="../acceuilAdmin/RecherchePatientParMedecin.xhtml"><i class="fa fa-circle-o"></i>Patient </a></li>
+                                    <li><a href="../adminSecretaire/List.xhtml"><i class="fa fa-circle-o"></i>Mes secretaires </a></li>
+                                </ul>
+                            </li>
+                            <li id="DemandeIns">
+                                <a href="../acceuilAdmin/Demandes.xhtml">
+                                    <i class="fa fa-table"></i> <span>Demande d'inscription </span>
+                                    <small class="label pull-right bg-red">#{demandeController.notificationDemandeInscription()}</small>
+                                </a>
+                            </li>
+                            <li >
+                                <a href="../acceuilAdmin/EditeProfil.xhtml">
+                                    <i class="fa fa-table"></i> <span>Parametre du compte </span>
+                                     <i class="fa fa-angle-left pull-right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </h:form>
+                    <!--AdminSec seulement-->
+                    <h:form rendered="#{(userConnexionController.fonction()=='AdminSecretaire')?true:false}">
+                        <ul class="sidebar-menu animationStyle">
+                            <li class="header">MAIN NAVIGATION</li>
+                            <li id="RdvPatient" >
+                                <a href="../acceuilAdminSec/RechercheRdv.xhtml">
+                                    <i class="fa fa-edit"></i> <span>Prendre un rdv</span>
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </a>
+                            </li>
+                           
+                            <li>
+                                <a href="../acceuilAdminSec/EditeProfil.xhtml">
+                                    <i class="fa fa-table"></i> <span>Parametre du compte </span>
+                                     <i class="fa fa-angle-left pull-right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </h:form>
+                    <!--MedecinSec seulement-->
+                    <h:form rendered="#{(userConnexionController.fonction()=='MedecinSecretaire')?true:false}">
+                        <ul class="sidebar-menu animationStyle">
+                            <li class="header">MAIN NAVIGATION</li>
+                            <li id="Agenda">
+                                <a href="../acceuilMedecinSec/Agenda.xhtml">
+                                    <i class="fa fa-pie-chart"></i>
+                                    <span>L'agenda </span>
+                                </a>
+                            </li>
+                            <li id="DemandeRdv">
+                                <a href="../acceuilMedecinSec/GestionDeRdv.xhtml">
+                                    <i class="fa fa-pie-chart"></i>
+                                    <span>Gestion des  rdvs </span>
+                                </a>
+                            </li>
+                            <li >
+                                <a href="../acceuilMedecinSec/consultationDeRdv.xhtml">
+                                    <i class="fa fa-table"></i> <span>ConsultationDeRdv</span>
+                                </a>
+                            </li>
+                            <li >
+                                <a href="../acceuilMedecinSec/EditeProfil.xhtml">
+                                    <i class="fa fa-table"></i> <span>Parametre du compte </span>
+                                     <i class="fa fa-angle-left pull-right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </h:form>
+                    <!--Mededin Menu-->
+                    <h:form rendered="#{(userConnexionController.fonction()=='Medecin')?true:false}">
+                        <ul class="sidebar-menu animationStyle">
+                            <li class="header">MAIN NAVIGATION</li>
+                            <li id="Agenda">
+                                <a href="../acceuilMedecin/Agenda.xhtml">
+                                    <i class="fa fa-pie-chart"></i>
+                                    <span>Mon agenda </span>
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </a>
+                            </li>
+                            <li id="Agenda">
+                                <a href="../acceuilMedecin/Acceuil.xhtml">
+                                    <i class="fa fa-pie-chart"></i>
+                                    <span>Statistique </span>
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </a>
+                            </li>
+                            <li id="DemandeRdv">
+                                <a href="../acceuilMedecin/DemandeRdv.xhtml">
+                                    <i class="fa fa-pie-chart"></i>
+                                    <span>demande rdv </span>
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </a>
+                            </li>
+                            <li class="treeview" id="MedecinGestion">
+                                <a href="#">
+                                    <i class="fa fa-folder"></i> <span>Gestion d'agenda</span>
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a href="../acceuilMedecin/MargeBloquante.xhtml"><i class="fa fa-circle-o"></i> Les marges bloquantes</a></li>
+                                    <li><a href="../acceuilMedecin/MargeNonBloquante.xhtml"><i class="fa fa-circle-o"></i>Les marges non bloquantes</a></li>
+                                </ul>
+                            </li>
+                            <li class="treeview" id="MedecinGestionParam">
+                                <a href="#">
+                                    <i class="fa fa-paperclip"></i> <span>Parametre</span>
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a href="../acceuilMedecin/Configuration.xhtml"><i class="fa fa-circle-o"></i> Ma configuration</a></li>
+                                    <li><a href="../acceuilMedecin/Notes.xhtml"><i class="fa fa-circle-o"></i>Mes notes</a></li>
+                                    <li><a href="../acceuilMedecin/EditeProfile.xhtml"><i class="fa fa-circle-o"></i>Mon compte</a></li>
+                                </ul>
+                            </li>
+                            <li id="GestionSecretraireMed" >
+                                <a href="../acceuilMedecin/GestionSec.xhtml">
+                                    <i class="fa fa-edit"></i> <span>Gestion des secretaires</span>
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </h:form>
+                    <!--Patient Menu-->
+                    <h:form rendered="#{(userConnexionController.fonction()=='Patient')?true:false}">
+                        <ul class="sidebar-menu animationStyle">
+                            <li class="header">MAIN NAVIGATION</li>
+                            <li id="RdvPatient" >
+                                <a href="../acceuilPatient/RechercheRdv.xhtml">
+                                    <i class="fa fa-edit"></i> <span>Prendre un rdv</span>
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </a>
+                            </li>
+                            <li id="AgendaPatient">
+                                <a href="../acceuilPatient/AgendaPatient.xhtml">
+                                    <i class="fa fa-table"></i> <span>Mon agenda</span>
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </a>
+                            </li>
+                            <li id="AgendaPatient">
+                                <a href="../acceuilPatient/GestionDeProfil.xhtml">
+                                    <i class="fa fa-table"></i> <span>gestion compte</span>
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </a>
+                            </li>
+                            <li id="AgendaPatient">
+                                <a href="../acceuilPatient/RdvPatient.xhtml">
+                                    <i class="fa fa-table"></i> <span>Mes rendez vous</span>
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </h:form>
+
+                </section>
+                <!-- /.sidebar -->
+            </aside>
+
+            <!-- Right side column. Contains the navbar and content of the page -->
+            <div class="content-wrapper">
+
+                <ui:insert name="body">
+
+                </ui:insert>
+            </div><!-- /.content-wrapper -->
+
+        </div>
+        <footer class="main-footer">
+            <div class="pull-right hidden-xs">
+                <b>Version</b> 2.0
+            </div>
+            <strong>Copyright &copy; 2014-2015 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights reserved.
+        </footer><!-- ./wrapper -->
+
+        <!-- jQuery 2.1.3 -->
+        <!--<h:outputScript name="dist/jQuery-2.1.3.min.js"/>-->
+        <!-- jQuery UI 1.11.2 -->
+        <!--<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.min.js" type="text/javascript"></script>-->
+        <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+        <script>
+            $.widget.bridge('uibutton', $.ui.button);
+        </script>
+        <!-- Bootstrap 3.3.2 JS -->
+        <h:outputScript name="bootstrap/js/bootstrap.min.js" />  
+
+        <!-- Bootstrap WYSIHTML5 -->
+        <h:outputScript name="dist/bootstrap3-wysihtml5.all.min.js" />
+
+        <!-- Slimscroll -->
+        <!--<h:outputScript name="plugins/slimScroll/jquery.slimscroll.min.js"/>-->
+        <!-- FastClick -->
+        <h:outputScript name="dist/fastclick.min.js" />
+        <!-- AdminLTE App -->
+        <h:outputScript name="dist/js/app.min.js" />
+
+        <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+        <h:outputScript name="dist/js/pages/dashboard.js" />
+
+        <!-- AdminLTE for demo purposes -->
+        <h:outputScript name="dist/js/demo.js" />
+        <script>
+            function acces() {
+                var fct = "#{userConnexionController.gestionMenu()}";
+                if (fct === 'Medecin') {
+                    document.getElementById('ProfileAdmin').style.display = 'none';
+                    document.getElementById('ProfilePatient').style.display = 'none';
+                    document.getElementById('ProfileSecMed').style.display = 'none';
+                    document.getElementById('ProfileSecAdmin').style.display = 'none';
+                    
+
+                } else if (fct === 'MedecinSecretaire') {
+                    document.getElementById('ProfileAdmin').style.display = 'none';
+                    document.getElementById('ProfilePatient').style.display = 'none';
+                     document.getElementById('ProfileMedecin').style.display = 'none';
+                    document.getElementById('ProfileSecAdmin').style.display = 'none';
+                   
+                } else if (fct === 'AdminSecretaire') {
+                    document.getElementById("ProfileMedecin").style.display = 'none';
+                    document.getElementById("ProfilePatient").style.display = 'none';
+                     document.getElementById('ProfileSecMed').style.display = 'none';
+                    document.getElementById('ProfileAdmin').style.display = 'none';
+                    
+                } else if (fct === 'Admin') {
+                     document.getElementById('ProfileSecMed').style.display = 'none';
+                    document.getElementById('ProfileSecAdmin').style.display = 'none';
+                   
+                    document.getElementById("ProfileMedecin").style.display = 'none';
+                   
+                    document.getElementById("ProfilePatient").style.display = 'none';
+                } else if (fct === 'Patient') {
+                     document.getElementById('ProfileSecMed').style.display = 'none';
+                    document.getElementById('ProfileSecAdmin').style.display = 'none';
+                    document.getElementById("ProfileMedecin").style.display = 'none';
+                    
+                    document.getElementById('ProfileAdmin').style.display = 'none';
+                   
+                }
+            }
+        </script>
+    </h:body>
+</html>

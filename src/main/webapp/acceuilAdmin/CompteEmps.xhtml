@@ -1,0 +1,242 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui">
+
+
+    <ui:composition template="/indexPatient.xhtml">
+
+        <ui:define name="body" >
+            <h:form  id="recherche" >
+                <div class="container-fluid" >
+                    <b:panel  style="background-color: #e7e7e7;">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-12 col-sm-12">
+                                <b:label text="Etat du compte :" />
+                                <b:selectOneMenu  value="#{employeController.typeBloquage}"   >
+                                    <f:selectItem value=""  itemLabel="--selecteOne--"/>
+                                    <f:selectItem value="Bloquer"  itemLabel="Bloquer"/>
+                                    <f:selectItem value="NonBloquer"   itemLabel="NonBloquer"/>
+                                </b:selectOneMenu>
+                            </div>
+                            <div class="col-lg-4 col-md-12 col-sm-12">
+                                <b:label text="Etat du mdp :"  />
+                                <b:selectOneMenu  value="#{employeController.etatMdp}"   >
+                                    <f:selectItem value=""  itemLabel="--selecteOne--"/>
+                                    <f:selectItem value="Changer"  itemLabel="Changer"/>
+                                    <f:selectItem value="NonChanger"   itemLabel="NonChanger"/>
+                                </b:selectOneMenu>
+                            </div>
+                            <div class="col-lg-4 col-md-12 col-sm-12">
+                                <b:label text="Fonction :"  />
+                                <b:selectOneMenu  value="#{employeController.fonction}"   >
+                                    <f:selectItem value=""  itemLabel="--selecteOne--"/>
+                                    <f:selectItem value="Medecin"  itemLabel="Medecin"></f:selectItem>
+                                    <f:selectItem value="MedecinSecretaire"  itemLabel="Secretaire Medecin"></f:selectItem>
+                                    <f:selectItem  value="AdminSecretires"  itemLabel="Secretaire Admine"></f:selectItem>
+                                </b:selectOneMenu>
+                            </div>
+                        </div>
+                        <br></br>
+                        <b:commandButton  ajax="true" actionListener="#{employeController.recherche()}" value="Rechercher"  update=":AdminSecretaireListForm :AdminSecretaireListForm:datalist" />
+                        <br></br>
+                    </b:panel>
+                </div>
+            </h:form>
+            <h:form id="AdminSecretaireListForm">
+                <p:dataTable id="datalist" value="#{employeController.items}" var="item"
+                             style="margin: 0 100px 0 100px;" class="data"
+                             >
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListEmployeTitle_cin}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.cin}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListEmployeTitle_nom}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.nom}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListEmployeTitle_prenom}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.prenom}"/>
+                    </p:column>²
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="fonction"/>
+                        </f:facet>
+                        <h:outputText value="#{employeController.job()}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListEmployeTitle_email}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.email}"/>
+                    </p:column>
+                    <p:column width="200px">
+                        <f:facet name="header">
+                            <h:outputText value="Action"/>
+                        </f:facet>
+                        <p:commandButton class="inline" icon="#{(item.userConnexion.blocked==1)?'ui-icon-key':'ui-icon-locked'}"  actionListener="#{employeController.bloquerDebloquer()}" />
+                        <p:commandButton id="viewButton"   icon="ui-icon-person"  update="EmployeViewForm2" oncomplete="PF('EmployeViewDialog').show()" disabled="#{empty employeController.selected}"/>
+                        <p:commandButton class="inline" icon="ui-icon-info" actionListener="#{employeController.device(item)}" update=":DeviceListForm" oncomplete="PF('DeviceDialog').show()"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+
+            <p:dialog id="EmployeViewDlg" widgetVar="EmployeViewDialog" modal="true" resizable="false" width="60%" appendTo="@(body)" >
+                <h:form id="EmployeViewForm2">
+                    <h:panelGroup id="display">
+                        <b:panel class="panel panel-default">
+                            <div class="container-fluid">
+                                <div class="row well well-lg">
+                                    <p:graphicImage library="img" class="center-block" name="default-user-image.png" width="100px" height="100px" style="border-radius: 100%;"/>
+                                </div>
+                                <div class="row well">
+                                    <div class="col-lg-6">
+                                        <div class="col-lg-6 col-md-6">
+                                            <b><h:outputText value="#{bundle.ViewEmployeLabel_nom}"/></b>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6">
+                                            <h:outputText value="#{employeController.selected.nom}" title="#{bundle.ViewEmployeTitle_nom}"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="col-lg-6 col-md-6">
+                                            <b> <h:outputText value="#{bundle.ViewEmployeLabel_prenom}"/></b>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6">
+                                            <h:outputText value="#{employeController.selected.prenom}" title="#{bundle.ViewEmployeTitle_prenom}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row well">
+                                    <div class="col-lg-6">
+                                        <div class="col-lg-6 col-md-6">
+                                            <b><h:outputText value="#{bundle.ViewEmployeLabel_dateNaissance}"/></b>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6">
+                                            <h:outputText value="#{employeController.selected.dateNaissance}" title="#{bundle.ViewEmployeTitle_dateNaissance}">
+                                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                                            </h:outputText>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="col-lg-6 col-md-6">
+                                            <b> <h:outputText value="#{bundle.ViewEmployeLabel_cin}"/></b>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6">
+                                            <h:outputText value="#{employeController.selected.cin}" title="#{bundle.ViewEmployeTitle_cin}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row well">
+                                    <div class="col-lg-6">
+                                        <div class="col-lg-6 col-md-6">
+                                            <b> <h:outputText value="#{bundle.ViewEmployeLabel_tel}"/></b>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6">
+                                            <h:outputText value="#{employeController.selected.tel}" title="#{bundle.ViewEmployeTitle_tel}"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="col-lg-6 col-md-6">
+                                            <b> <h:outputText value="#{bundle.ViewEmployeLabel_email}"/></b>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6">
+                                            <h:outputText value="#{employeController.selected.email}" title="#{bundle.ViewEmployeTitle_email}"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </b:panel>
+                        <p:commandButton value="#{bundle.Close}" onclick="EmployeViewDialog.hide()"/>
+                    </h:panelGroup>
+                </h:form>
+            </p:dialog>
+
+            <p:dialog id="DeviceDlg" widgetVar="DeviceDialog" modal="true" resizable="false" width="60%" appendTo="@(body)" >
+                <h:form id="DeviceListForm" style="margin-top:100px; margin-bottom: 100px">
+                    <div class="container-fluid">
+                        <p:panel header="Historique des connexions">
+                            <p:dataTable class="responstable" id="datalist" value="#{userConnexionController.devices}" var="itemD"
+                                         paginator="true"
+                                         rowKey="#{itemD.id}">
+                                <!--                                     rows="10"
+                                                                     rowsPerPageTemplate="10,20,30,40,50"
+                                                                     >-->
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="#{bundle.ListDeviceTitle_nom}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{itemD.nom}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="#{bundle.ListDeviceTitle_adresseMac}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{itemD.adresseMac}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="#{bundle.ListDeviceTitle_adresseIP}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{itemD.adresseIP}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Date d'entrer"/>
+                                    </f:facet>
+                                    <h:outputText value="#{itemD.dateEntree}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Date de sortir"/>
+                                    </f:facet>
+                                    <h:outputText value="#{itemD.dateSortie}"/>
+                                </p:column>
+                            </p:dataTable>
+                        </p:panel>
+                    </div>
+                </h:form>
+            </p:dialog>
+
+
+
+
+
+
+
+            <style>
+                .data{
+                    position: relative;
+                    background-color: #FFFFFF;
+                    border-radius: 3%;
+                    animation-name: example;
+                    animation-duration: 4s;
+
+                }
+                /* Standard syntax */
+                @keyframes example {
+                    0%   {left:-1000px;}
+
+                    50%  {left:100px;}
+                    100% { left:0px;}
+                }
+
+
+            </style>
+            <!--<ui:include src="ViewEmp.xhtml"/>-->
+        </ui:define>
+    </ui:composition>
+
+</html>

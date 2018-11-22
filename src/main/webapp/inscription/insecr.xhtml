@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+
+      xmlns:b="http://bootsfaces.net/ui">
+
+    <h:head>
+
+        <f:facet name="first">
+            <meta charset="utf-8"/>
+            <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        </f:facet>
+
+        <f:facet name="seconde">
+            <h:outputStylesheet name="/bootstrap-3.3.7-dist/css/bootstrap.css"/>
+
+            <h:outputStylesheet  name="/bootstrap-3.3.7-dist/js/bootstrap.js"/>
+        </f:facet>
+
+        <h:outputScript name="/inscription/javascript.js"/>
+
+        <script src="https://use.fontawesome.com/83907fc2f8.js"></script>
+        <!--<link href="css/navbar-fixed-side.css" rel="stylesheet" />-->
+
+        <h:outputStylesheet library="bootstrap-3.3.7-dist" name="css/bootstrap.min.css"/>
+        <h:outputScript library="bootstrap-3.3.7-dist" name="js/bootstrap.min.js"/>
+
+        <h:outputStylesheet library="font-awesome" name="css/font-awesome.css"/>
+        <h:outputStylesheet library="font-awesome" name="css/font-awesome.min.css"/>
+
+        <h:outputStylesheet library="css" name="styleInscreption.css"/>
+        <h:outputScript name="js/jsInsecription.js"/>
+
+    </h:head>
+
+
+    <h:body onload="PF('passwordDialog').show()" >
+        <!--<h:body style="background-image: url('../medic-563425_1920.jpg')">-->
+        <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+            <a href="../inscription/insecr.xhtml" ><p:outputLabel class="fa fa-user" value="Profil"/></a>
+            <a href="../calendar/Agenda.xhtml"><p:outputLabel class="fa fa-calendar" value="Agenda" /></a>
+            <a href="../patient/List.xhtml"><p:outputLabel class="fa fa-bed" value="patient" /></a>
+        </div>
+
+        <div id="main">
+<!--            <div class="container-fluid">
+                <div class="row">
+                    <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; open</span>
+                    <div style="float: right">
+                        <p:commandButton value="déconnecter" icon="fa fa-sign-out" class="btn btn-default" action="#{medecinController1.signOut()}" />
+                    </div>
+                </div>
+            </div>-->
+            <h:form id="MedecinCreateForm"  >
+                <!--tiny-screen='half' offset-sm='3'-->
+                <div class="container-fluid">
+                    <div class="row">
+                        <b:panel class="col-lg-6 col-md-12 " style="margin: 20px 0 20px 0;">
+
+                            <b:image class="center-block"  value="../jesse-orrico-60373.jpg"  height="100px" width="100px" style="border-radius: 100%;" tooltip="Ain't he a beauty?" />
+                        <!--<p:outputLabel value="#{bundle.CreateMedecinLabel_nom}" for="nom" />-->
+                            <b:inputText id="nom" value="#{medecinController1.selected.nom}" title="#{bundle.CreateMedecinTitle_nom}"   label="#{bundle.CreateMedecinLabel_nom}"/>
+
+<!--<p:outputLabel value="#{bundle.CreateMedecinLabel_prenom}" for="prenom" />-->
+                            <b:inputText id="prenom" value="#{medecinController1.selected.prenom}" title="#{bundle.CreateMedecinTitle_prenom}"   label="#{bundle.CreateMedecinLabel_prenom}"/>
+
+                            <p:outputLabel value="#{bundle.CreateMedecinLabel_dateNaissance}" for="dateNaissance" /><br></br>
+                            <p:calendar id="dateNaissance" class="text-justify ui-widget " pattern="MM/dd/yyyy" value="#{medecinController1.selected.dateNaissance}" title="#{bundle.EditMedecinSecretaireTitle_dateNaissance}"  label="#{bundle.CreateMedecinSecretaireLabel_dateNaissance}" size="79"/>
+
+                    <!--<b:inputText id="dateNaissance"  value="#{medecinController1.selected.dateNaissance}" title="#{bundle.EditMedecinTitle_dateNaissance}" label="#{bundle.CreateMedecinLabel_dateNaissance}"  disabled="true"/>-->
+
+<!--<p:outputLabel value="#{bundle.CreateMedecinLabel_cin}" for="cin" />-->
+                            <b:inputText id="cin" value="#{medecinController1.selected.cin}" title="#{bundle.CreateMedecinTitle_cin}"   label="#{bundle.CreateMedecinLabel_cin}"/>
+
+                <!--<p:outputLabel value="#{bundle.CreateMedecinLabel_residence}" for="residence" />-->
+                            <b:inputText id="residence"  value="#{medecinController1.selected.residence}" label="#{bundle.CreateMedecinLabel_residence}"    />
+
+<!--<p:outputLabel value="#{bundle.CreateMedecinLabel_specialite}" for="specialite" />-->
+                            <b:inputText id="specialite"  value="#{medecinController1.selected.specialite}" label="#{bundle.CreateMedecinLabel_specialite}"   /> 
+
+                <!--<p:outputLabel value="#{bundle.CreateMedecinLabel_tel}" for="tel" />-->
+                            <b:inputText id="tel" value="#{medecinController1.selected.tel}" title="#{bundle.CreateMedecinTitle_tel}"  label="#{bundle.CreateMedecinLabel_tel}"/>
+
+<!--<p:outputLabel value="#{bundle.CreateMedecinLabel_email}" for="email" />-->
+                            <b:inputText id="email" value="#{medecinController1.selected.email}" title="#{bundle.CreateMedecinTitle_email}"  label="#{bundle.CreateMedecinLabel_email}"/>
+
+ <!--<p:outputLabel value="#{bundle.CreateMedecinLabel_id}" for="id" />-->
+ <!--<b:inputText id="id" value="#{medecinController1.selected.id}" title="#{bundle.CreateMedecinTitle_id}"   label="#{bundle.CreateMedecinLabel_id}"/>-->
+
+                            <p:commandButton value="Edit" actionListener="#{medecinController1.update()}" class="btn btn-info col-lg-12" />
+                        </b:panel>
+
+                        <div class="col-lg-6 col-md-12">
+                            <b:panel style="float: left;margin-top: 20px;" class="col-lg-12 col-md-12" tooltipPosition="left" look="info">
+                                <b:dataTable value="#{medecinController1.medecinSecretaireItems}" var="item" 
+                                             page-length="5"
+                                             page-length-menu="5,10,20"
+                                             >
+                                    <b:dataTableColumn value="#{item.nom} #{item.prenom}" label="Nom et Prenom"/>
+                                    <b:dataTableColumn value="#{item.tel}" />
+                                    <b:dataTableColumn value="#{item.cin}" />
+                                    <b:dataTableColumn value="#{item.email}" />
+
+                                </b:dataTable>
+                            </b:panel>
+
+                            <b:panel style="float: left;margin-top: 20px;" class="col-lg-12 col-md-12" tooltipPosition="left" look="info">
+
+                                <div class="col-lg-12 col-md-12 config">
+                                    <h3 >votre configuration</h3>
+                                    <p style="text-align: center; background-color: #eeeeee; " class="rounded">
+                                        l'heur de debut #{medecinController1.configuration.heureDebut} -----> #{medecinController1.configuration.heureFin}<br></br>
+                                        durée de rdv est #{medecinController1.configuration.pas}
+                                    </p>
+
+                                </div>
+                            </b:panel>
+                            <b:panel id="NotePanel" style="float: left;margin-top: 20px;"  class="col-lg-12 col-md-12">
+                                <h3>creer une note :</h3>
+                                <b:inputTextarea id="note" value="#{medecinController1.noteDesc}" label="Description"/>
+                                <p:commandButton class="btn btn-primary " icon="fa fa-save" id="creationNote" value="Save" actionListener="#{medecinController1.creationNote()}" update="NotePanel"/>
+
+
+                            </b:panel>
+                        </div>
+                    </div>
+                </div>
+            </h:form>
+
+            <!--            <h:form>
+                            <b:panel style="margin-top: 10px;clear: both;"  class="col-lg-12 col-md-12">
+                                <b:dataTable value="#{rdvController.items}" var="item" 
+                                             page-length="5"
+                                             page-length-menu="5,10,20"
+            
+                                             >
+                                    <b:dataTableColumn value="#{item.patient} " label="Nom et Prenom"/>
+                                    <b:dataTableColumn value="#{item.patient.gender}" label="Gender"/>
+                                    <b:dataTableColumn value="#{item.dateDebut}" label="Date de debut"/>
+            
+            
+            
+                                </b:dataTable>
+                            </b:panel>
+                        </h:form>-->
+            <br></br>
+            <footer style="width: 100%;background-color: #000;clear: both;opacity: 0.7;">
+
+                <div id="googleMap" style="width:500px;height:300px;border: 5px;opacity: 1;"></div>
+            </footer>
+        </div>
+
+
+
+
+
+        <p:dialog id="passwordDlg" widgetVar="passwordDialog" modal="true" resizable="false" appendTo="@(body)" showEffect="drop" hideEffect="drop"  width="60%" closable="false" rendered="#{medecinController1.selected.userConnexion.mdpChanged == false}">
+            <h:form id="form1">
+                <b:panel title="Etape 1 : changer le mot de passe" id="xxidk" >
+                    <b:inputSecret  id="Apassword" value="#{medecinController1.anciennePassword}" title="#{bundle.CreateUserConnexionTitle_password}" label="ancienne mot de pass"/>
+
+                    <b:inputSecret id="Npassword" value="#{medecinController1.nouveauPassword}" title="#{bundle.CreateUserConnexionTitle_password}" label="nouveau mot de pass"/>
+
+                    <b:inputSecret id="Cpassword" value="#{medecinController1.confirmationDeNouveauPassword}" title="#{bundle.CreateUserConnexionTitle_password}" label="confirmation de mot de pass"/>
+                </b:panel>
+
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-3"></div>
+                        <!--<p:commandButton id="precedantStep"  icon="ui-icon-search" value="precedant" class="btn btn-primary col-lg-2"  update=":MedecinFormDlg"  oncomplete="PF('passwordDialog').hide();setTimeout(myFunction,500)"/>-->
+                        <div class="col-lg-2"></div>
+                        <p:commandButton id="save" icon="ui-icon-plus" class="btn btn-primary col-lg-2" value="Save" actionListener="#{medecinController1.changePasseWord()}" />
+                        <div class="col-lg-2"></div>
+                        <p:commandButton id="NextStep"  icon="ui-icon-search" value="Next" class="btn btn-primary col-lg-2"   update=":MedecinFormDlg"  oncomplete="PF('passwordDialog').hide();setTimeout(myFunction,500)"/>
+                    </div>
+                </div>
+
+            </h:form>
+            <!--            <p:effect type="drop" event="click">
+                        </p:effect>-->
+
+
+
+        </p:dialog>
+
+        <p:dialog id="MedecinFormDlg" widgetVar="MedecinFormDialog" modal="true" resizable="false" appendTo="@(body)" showEffect="drop" hideEffect="drop"  width="60%" closable="false">
+            <h:form id="form2">
+                <b:panel title="Etape 2 : inserer des information" >
+
+                    <div class="container-fluid">
+                        <div class="rows">
+                            <div class="col-lg-6">
+
+                                <b:inputText id="cin" value="#{medecinController1.selected.cin}" title="#{bundle.CreateMedecinTitle_cin}" label="#{bundle.CreateMedecinLabel_cin}"/>
+
+                                <p:outputLabel value="#{bundle.CreateMedecinLabel_dateNaissance}" for="popup"/>
+                                <p:calendar id="popup" pattern="MM/dd/yyyy" value="#{medecinController1.selected.dateNaissance}" title="#{bundle.EditMedecinTitle_dateNaissance}" size="41"/>
+                                <br></br>
+
+                                <b:inputText id="tel" value="#{medecinController1.selected.tel}" title="#{bundle.CreateMedecinTitle_tel}" label="#{bundle.CreateMedecinLabel_tel}"/>
+                            </div>
+                            <div class="col-lg-6">
+
+
+                                <b:inputText id="email" value="#{medecinController1.selected.email}" title="#{bundle.CreateMedecinTitle_email}" label="#{bundle.CreateMedecinLabel_email}"/>
+
+                                <p:outputLabel value="#{bundle.CreateMedecinLabel_specialite}"  />
+                                <h:selectOneMenu value="#{medecinController1.selected.specialite}" class="col-lg-12 text-justify" style="height: 34px;border-radius: 5px;">
+                                    <f:selectItems value="#{specialiteController.itemsAvailableSelectOne}"
+                                                   var="specialiteItem"
+                                                   itemValue="#{specialiteItem}"/>
+                                </h:selectOneMenu>
+
+
+                                <br></br>
+
+                                <p:outputLabel value="#{bundle.CreateMedecinLabel_residence}"  />
+                                <h:selectOneMenu  value="#{medecinController1.selected.residence}" class="col-lg-12 text-justify" style="height: 34px;border-radius: 5px;">
+                                    <f:selectItems  value="#{residenceController.itemsAvailableSelectOne}"
+                                                    var="residenceItem"
+                                                    itemValue="#{residenceItem}"/>
+                                </h:selectOneMenu>
+                            </div>
+                        </div>
+                    </div>
+
+                </b:panel>
+
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-1"></div>
+                        <p:commandButton id="precedantStep"  icon="ui-icon-search" value="precedent" class="btn btn-primary col-lg-2"   update=":passwordDlg"  oncomplete="PF('passwordDialog').hide();setTimeout(myFunction1,500)"/>
+                        <div class="col-lg-2"></div>
+                        <p:commandButton id="save" icon="ui-icon-plus" class="btn btn-primary col-lg-2" value="Save" actionListener="#{medecinController1.editMedecin()}" />
+                        <div class="col-lg-2"></div>
+                        <p:commandButton id="NextStep" class="btn btn-primary col-lg-2"  icon="ui-icon-search" value="Next"   update=":configurationDlg" oncomplete="PF('MedecinFormDialog').hide();setTimeout(myFunction2,500)" />
+                    </div>
+                </div>
+            </h:form>
+        </p:dialog>
+
+        <p:dialog id="configurationDlg" widgetVar="configurationDialog" modal="true" resizable="false" appendTo="@(body)" showEffect="drop" hideEffect="drop"  width="60%" closable="false">
+
+            <h:form id="form3">
+
+                <b:panel title="Etap 3 : configurration">
+                    <b:inputText  id="pas" value="#{medecinController1.configuration.pas}" title="#{bundle.CreateConfigurationTitle_pas}" label="#{bundle.CreateConfigurationLabel_pas}" />
+
+                    <div class="container-fluid">
+                        <div class="rows">
+                            <p:outputLabel value="#{bundle.CreateConfigurationLabel_heureDebut}"  class="col-lg-2"/>
+                            <div class="col-lg-12">
+                                <p:calendar mode="popup" size="92" pattern="HH:mm:ss" value="#{medecinController1.configuration.heureDebut}" title="#{bundle.EditConfigurationTitle_heureDebut}"  />
+                            </div>
+                        </div>
+                    </div>
+                    <br></br>
+                    <div class="container-fluid">
+                        <div class="rows">
+                            <p:outputLabel value="#{bundle.CreateConfigurationLabel_heureFin}" class="col-lg-2"/>
+                            <div class="col-lg-12">
+                                <p:calendar  mode="popup" size="92" pattern="HH:mm:ss" value="#{medecinController1.configuration.heureFin}" title="#{bundle.EditConfigurationTitle_heureFin}"  />
+                            </div>
+                        </div>
+                    </div>
+
+                </b:panel>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-1"></div>
+                        <p:commandButton id="precedantStep"  icon="ui-icon-search" value="precedent" class="btn btn-primary col-lg-2" update=":MedecinFormDlg"  oncomplete="PF('configurationDialog').hide();setTimeout(myFunction,500)"/>
+                        <div class="col-lg-2"></div>
+                        <p:commandButton id="save" icon="ui-icon-plus" class="btn btn-primary col-lg-2" value="Save" actionListener="#{medecinController1.createConfiguration()}" />
+                        <div class="col-lg-2"></div>
+                        <p:commandButton id="NextStep2"  class="btn btn-primary col-lg-2" icon="ui-icon-search" value="Next" update=":secretaireMedecinDlg" oncomplete="PF('configurationDialog').hide();setTimeout(myFunction3,500)"  />
+
+                    </div>
+                </div>
+
+            </h:form>
+        </p:dialog>
+
+        <p:dialog id="secretaireMedecinDlg" widgetVar="secretaireMedecinDialog" modal="true" resizable="false" appendTo="@(body)" showEffect="drop" hideEffect="drop"  width="60%" closable="false">
+
+            <h:form id="form4">
+                <p:outputLabel value="creer la Secretaires" />
+
+                <b:panel title="Etape 4 : inserer les secretare"  >
+                    <div class="container-fluid">
+                        <div class="rows">
+                            <div class="col-lg-6">
+                                <b:inputText id="nom" value="#{medecinController1.medecinSecretaire.nom}" title="#{bundle.CreateMedecinSecretaireTitle_nom}" label="#{bundle.CreateMedecinSecretaireLabel_nom}"/>
+
+                                <b:inputText id="email" value="#{medecinController1.medecinSecretaire.email}" title="#{bundle.CreateMedecinSecretaireTitle_email}" label="#{bundle.CreateMedecinSecretaireLabel_email}"/>
+
+<!--                                <b:inputText id="prenom" value="#{medecinController1.medecinSecretaire.prenom}" title="#{bundle.CreateMedecinSecretaireTitle_prenom}" label="#{bundle.CreateMedecinSecretaireLabel_prenom}"/>
+
+                                <b:inputText id="cin" value="#{medecinController1.medecinSecretaire.cin}" title="#{bundle.CreateMedecinSecretaireTitle_cin}" label="#{bundle.CreateMedecinSecretaireLabel_cin}"/>
+
+                                <p:outputLabel value="#{bundle.CreateMedecinSecretaireLabel_dateNaissance}" for="dateNaissance" />
+                                <p:calendar id="dateNaissance" pattern="MM/dd/yyyy" value="#{medecinController1.medecinSecretaire.dateNaissance}" title="#{bundle.EditMedecinSecretaireTitle_dateNaissance}"  label="#{bundle.CreateMedecinSecretaireLabel_dateNaissance}" size="41"/>-->
+                            </div>
+
+                            <div class="col-lg-6">
+
+<!--                                <b:inputText id="tel" value="#{medecinController1.medecinSecretaire.tel}" title="#{bundle.CreateMedecinSecretaireTitle_tel}" label="#{bundle.CreateMedecinSecretaireLabel_tel}"/>-->
+
+                                <!--<b:inputText id="email" value="#{medecinController1.medecinSecretaire.email}" title="#{bundle.CreateMedecinSecretaireTitle_email}" label="#{bundle.CreateMedecinSecretaireLabel_email}"/>-->
+
+                                <b:inputText id="login" value="#{medecinController1.userConnexion.login}" title="#{bundle.CreateUserConnexionTitle_login}" label="login"/>
+
+                                <b:inputSecret id="password" value="#{medecinController1.userConnexion.password}" title="#{bundle.CreateUserConnexionTitle_password}" label="password"/>
+                            </div>
+                        </div>
+                    </div>
+                </b:panel>
+
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-1"></div>
+                        <p:commandButton id="precedantStep"  icon="ui-icon-search" value="precedent" class="btn btn-primary col-lg-2"   update=":configurationDlg"  oncomplete="PF('secretaireMedecinDialog').hide();setTimeout(myFunction2,500)"/>
+                        <div class="col-lg-2"></div>
+                        <p:commandButton id="save" icon="ui-icon-plus" class="btn btn-primary col-lg-2" value="Save" actionListener="#{medecinController1.ctreateMedecinSecrutariant()}" update="form4"/>
+                        <div class="col-lg-2"></div>
+                        <p:commandButton id="NextStep" class="btn btn-primary"  icon="ui-icon-search" value="finish"  update=":MedecinCreateForm" oncomplete="PF('secretaireMedecinDialog').hide()" />
+
+                    </div>
+                </div>
+            </h:form>
+        </p:dialog>
+
+
+        <script>
+            function myMap() {
+                var mapProp = {
+                    center: new google.maps.LatLng(40.508742, -0.150850),
+                    zoom: 5,
+                };
+                var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+            }
+        </script>
+
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA4-qePgG-E5vnu_NpmLtdlAuqGb-EZLxo&amp;callback=myMap"></script>
+
+        <script>
+            function  myFunction() {
+                PF('MedecinFormDialog').show();
+            }
+            function  myFunction1() {
+                PF('passwordDialog').show();
+            }
+            function  myFunction2() {
+                PF('configurationDialog').show();
+            }
+            function  myFunction3() {
+                PF('secretaireMedecinDialog').show();
+            }
+
+        </script>
+    </h:body>
+
+</html>
+

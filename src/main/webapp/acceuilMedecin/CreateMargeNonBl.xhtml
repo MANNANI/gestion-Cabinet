@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MargeNonBloquanteCreateDlg" widgetVar="MargeNonBloquanteCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateMargeNonBloquanteTitle}">
+            <h:form id="MargeNonBloquanteCreateForm">
+ 
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2">
+                        <p:selectManyMenu id="vacance" value="#{margeNonBloquanteController.vacances}" converter="vacanceControllerConverter" 
+                                          var="t" filter="true" filterMatchMode="contains" showCheckbox="true">
+                            <f:selectItems value="#{vacanceController.itemsAvailableSelectMany}" var="theme" itemLabel="#{theme}" itemValue="#{theme}" />
+                            <p:column>
+                                <h:outputText value="#{t}" />
+                            </p:column>
+                        </p:selectManyMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{margeNonBloquanteController.create}" value="#{bundle.Save}" update="display,:MargeNonBloquanteListForm" oncomplete="handleSubmit(args,'MargeNonBloquanteCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="MargeNonBloquanteCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

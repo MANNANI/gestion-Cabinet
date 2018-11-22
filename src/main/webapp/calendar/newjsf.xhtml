@@ -1,0 +1,110 @@
+
+     
+        <div class="note">
+            <!--            <h:form >
+                            <p:outputLabel value="#{noteServiceController.selected.note}  FROM DR.#{noteServiceController.selected.medecin.nom}"></p:outputLabel> 
+            
+                        </h:form>-->
+            <h:form >
+                <p:dataTable id="datalist" value="#{noteServiceController.items}" var="item"
+                             selectionMode="single" selection="#{noteServiceController.selected}"
+                             paginator="true"
+                             paginatorPosition="bottom"
+                             rowKey="#{item.id}"
+
+                             rows="5"
+                             rowsPerPageTemplate="10,20,30,40,50"
+                             >
+                    <p:column class="styless">
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListNoteServiceTitle_note}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.note}"/>
+
+                    </p:column>
+
+                    <p:column class="styless">
+                        <f:facet name="header">
+                            <h:outputText value="From"/>
+                        </f:facet>
+                        <h:outputText value="Dr.#{item.medecin.nom}"/>
+                    </p:column>
+                    <f:facet name="footer">
+                        <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" action="/margeBloquante/CreerMargeBl.xhtml" />
+                    </f:facet>
+                </p:dataTable>
+            </h:form>
+            <p:dialog id="MargeBloquanteCreateDlg" widgetVar="MargeBloquanteCreateDialog1" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateMargeBloquanteTitle}">
+                <h:form id="margeBloquante">
+                    <h:panelGroup id="display">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="#{bundle.CreateMargeBloquanteLabel_dateDebut}" for="dateDebut" />
+                            <p:calendar id="dateDebut" pattern="MM/dd/yyyy HH:mm:ss" value="#{margeBloquanteController.selectedMarge.dateDebut}" title="#{bundle.EditMargeBloquanteTitle_dateDebut}"  showOn="button"/>
+                            <p:outputLabel value="#{bundle.CreateMargeBloquanteLabel_dateFin}" for="dateFin" />
+                            <p:calendar id="dateFin" pattern="MM/dd/yyyy HH:mm:ss" value="#{margeBloquanteController.selectedMarge.dateFin}" title="#{bundle.EditMargeBloquanteTitle_dateFin}"  showOn="button"/>
+                            <p:outputLabel value="#{bundle.CreateMargeBloquanteLabel_color}" for="color" />
+                            <p:inputText id="color" value="#{margeBloquanteController.selectedMarge.color}" title="#{bundle.CreateMargeBloquanteTitle_color}" />
+                            <p:outputLabel value="#{bundle.CreateMargeBloquanteLabel_medecin}" for="medecin" />
+                            <p:selectOneMenu id="medecin" value="#{margeBloquanteController.selectedMarge.medecin}" >
+                                <f:selectItems value="#{medecinController.itemsAvailableSelectOne}"
+                                               var="medecinItem"
+                                               itemValue="#{medecinItem}"/>
+                            </p:selectOneMenu>
+                        </p:panelGrid>
+                    </h:panelGroup>
+                </h:form> 
+                <h:outputText value="creation de marge"></h:outputText>
+
+                <h:form id="MargeItemForm">
+                    <h:panelGroup id="display">
+                        <p:panelGrid columns="2" >
+                            <p:outputLabel value="#{bundle.CreateMargeItemLabel_heureDebut}" for="heureDebut" />
+                            <p:calendar id="heureDebut" pattern="HH:mm:ss" value="#{margeBloquanteController.margeItem.heureDebut}" title="#{bundle.EditMargeItemTitle_heureDebut}"  showOn="button"/>
+                            <p:outputLabel value="#{bundle.CreateMargeItemLabel_heureFin}" for="heureFin" />
+                            <p:calendar id="heureFin" pattern="HH:mm:ss" value="#{margeBloquanteController.margeItem.heureFin}" title="#{bundle.EditMargeItemTitle_heureFin}"  showOn="button"/>
+                            <p:outputLabel value="#{bundle.CreateMargeItemLabel_jour}" for="jour" />
+                            <p:inputText id="jour" value="#{margeBloquanteController.margeItem.jour}" title="#{bundle.CreateMargeItemTitle_jour}" />
+                            <p:outputLabel value="#{bundle.CreateMargeItemLabel_mois}" for="mois" />
+                            <p:inputText id="mois" value="#{margeBloquanteController.margeItem.mois}" title="#{bundle.CreateMargeItemTitle_mois}" />
+                            <p:outputLabel value="#{bundle.CreateMargeItemLabel_annee}" for="annee" />
+                            <p:inputText id="annee" value="#{margeBloquanteController.margeItem.annee}" title="#{bundle.CreateMargeItemTitle_annee}" />
+                        </p:panelGrid>
+                        <p:commandButton actionListener="#{margeBloquanteController.createMargeItem()}" value="#{bundle.Save}" />
+                    </h:panelGroup>
+                <p:commandButton actionListener="#{margeBloquanteController.create()}" value="#{bundle.Save} MargeBloquante" oncomplete="PF('MargeBloquanteCreateDialog1').hide()"/>
+                </h:form>
+            </p:dialog>
+        </div>
+
+        <style type="text/css">
+            .value {
+                width: 1000px;
+            }
+            .colorRdv{
+                background-color: red;
+            }
+            .styleCss{
+                background-color: yellow;
+
+            }
+            .fc-day .ui-layout-unit-content{
+                background-color: blue;
+            }
+            .note{
+
+                position: fixed;
+                margin-left: 75%;
+                width: 22%;
+                height:100px;
+                margin-top: 10%;
+            }
+            .styless{
+                background-color: #ffffcc;
+                border-left: 6px solid #ffeb3b;
+            }
+        </style>
+    </h:body>
+</html>
+
+
+

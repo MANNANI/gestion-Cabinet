@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MedecinRecherche" widgetVar="MedecinRechercheDialog" modal="true" resizable="false" appendTo="@(body)" header="recherche">
+            <h:form id="MedecinRechercheForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" >
+                        <p:outputLabel value="#{bundle.CreateMedecinLabel_specialite}" for="specialite" />
+                        <p:selectOneMenu id="specialite" value="#{medecinController1.selected.specialite}" >
+                        
+                            <f:selectItems value="#{specialiteController.itemsAvailableSelectOne}"
+                                           var="specialiteItem"
+                                           itemValue="#{specialiteItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateMedecinLabel_residence}" for="residence" />
+                        <p:selectOneMenu id="residence" value="#{medecinController1.selected.residence}" >
+                            <f:selectItems value="#{residenceController.itemsAvailableSelectOne}"
+                                           var="residenceItem"
+                                           itemValue="#{residenceItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateMedecinLabel_tel}" for="tel" />
+                        <p:inputText id="tel" value="#{medecinController1.selected.tel}" title="#{bundle.CreateMedecinTitle_tel}" />
+                        <p:outputLabel value="#{bundle.CreateMedecinLabel_email}" for="email" />
+                        <p:inputText id="email" value="#{medecinController1.selected.email}" title="#{bundle.CreateMedecinTitle_email}" />
+                        <p:outputLabel value="#{bundle.CreateMedecinLabel_nom}" for="nom" />
+                        <p:inputText id="nom" value="#{medecinController1.selected.nom}" title="#{bundle.CreateMedecinTitle_nom}" />
+                        <p:outputLabel value="#{bundle.CreateMedecinLabel_prenom}" for="prenom" />
+                        <p:inputText id="prenom" value="#{medecinController1.selected.prenom}" title="#{bundle.CreateMedecinTitle_prenom}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{medecinController1.recherche}" value="Chercher" update="display,:MedecinListForm:datalist,:growl" oncomplete="handleSubmit(args,'MedecinRechercheDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="MedecinRechercheDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
+
+
+

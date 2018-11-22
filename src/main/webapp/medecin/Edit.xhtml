@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MedecinEditDlg" widgetVar="MedecinEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditMedecinTitle}">
+            <h:form id="MedecinEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{medecinController1.selected != null}">
+                        <p:outputLabel value="#{bundle.EditMedecinLabel_specialite}" for="specialite" />
+                        <p:selectOneMenu id="specialite" value="#{medecinController1.selected.specialite}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{specialiteController.itemsAvailableSelectOne}"
+                                           var="specialiteItem"
+                                           itemValue="#{specialiteItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditMedecinLabel_residence}" for="residence" />
+                        <p:selectOneMenu id="residence" value="#{medecinController1.selected.residence}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{residenceController.itemsAvailableSelectOne}"
+                                           var="residenceItem"
+                                           itemValue="#{residenceItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditMedecinLabel_configuration}" for="configuration" />
+                        <p:selectOneMenu id="configuration" value="#{medecinController1.selected.configuration}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{configurationController.itemsAvailableSelectOne}"
+                                           var="configurationItem"
+                                           itemValue="#{configurationItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditMedecinLabel_dateNaissance}" for="dateNaissance" />
+                        <p:calendar id="dateNaissance" pattern="MM/dd/yyyy" value="#{medecinController1.selected.dateNaissance}" title="#{bundle.EditMedecinTitle_dateNaissance}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditMedecinLabel_cin}" for="cin" />
+                        <p:inputText id="cin" value="#{medecinController1.selected.cin}" title="#{bundle.EditMedecinTitle_cin}" />
+                        <p:outputLabel value="#{bundle.EditMedecinLabel_tel}" for="tel" />
+                        <p:inputText id="tel" value="#{medecinController1.selected.tel}" title="#{bundle.EditMedecinTitle_tel}" />
+                        <p:outputLabel value="#{bundle.EditMedecinLabel_email}" for="email" />
+                        <p:inputText id="email" value="#{medecinController1.selected.email}" title="#{bundle.EditMedecinTitle_email}" />
+                        <p:outputLabel value="#{bundle.EditMedecinLabel_nom}" for="nom" />
+                        <p:inputText id="nom" value="#{medecinController1.selected.nom}" title="#{bundle.EditMedecinTitle_nom}" />
+                        <p:outputLabel value="#{bundle.EditMedecinLabel_prenom}" for="prenom" />
+                        <p:inputText id="prenom" value="#{medecinController1.selected.prenom}" title="#{bundle.EditMedecinTitle_prenom}" />
+                        <p:outputLabel value="#{bundle.EditMedecinLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{medecinController1.selected.id}" title="#{bundle.EditMedecinTitle_id}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{medecinController1.update}" value="#{bundle.Save}" update="display,:MedecinListForm:datalist,:growl" oncomplete="handleSubmit(args, 'MedecinEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="MedecinEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

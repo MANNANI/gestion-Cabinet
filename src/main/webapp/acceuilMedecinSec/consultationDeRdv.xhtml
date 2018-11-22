@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:composition template="/indexPatient.xhtml">
+
+        <ui:define name="body">
+
+
+            <h:form id="consultationRdv">
+                <h1><h:outputText value="List"/></h1>
+                <p:dataTable value="#{rdvController.items}" var="item">
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Patient"/>
+                        </f:facet>
+                        <h:outputText value="#{item.patient.nom}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Medecin"/>
+                        </f:facet>
+                        <h:outputText value="Dr.#{item.medecin.nom} #{item.medecin.prenom}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="DateDebut"/>
+                        </f:facet>
+                        <h:outputText value="#{item.dateDebut}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column >
+                        <f:facet name="header">
+                            <h:outputText value="nombre jour restant"/>
+                        </f:facet>
+                        <h:outputText value="#{rdvController.nbrJourRestent(item)}"/>
+                    </p:column>
+                    <p:column >
+                        <f:facet name="header">
+                            <h:outputText value="nombre jour restant"/>
+                        </f:facet>
+                        <p:commandButton id="delete" icon="ui-icon-trash" value="Delete" actionListener="#{rdvController.deleteDemandeRdv(item)}"/>
+                        <p:commandButton id="modifier" icon="ui-icon-pencil" value="Edit" actionListener="#{rdvController.detailPatient(item)}" oncomplete="PF('RdvViewDialog').show()"/>
+                    </p:column>
+
+                </p:dataTable>
+
+
+
+                <p:dialog id="RdvViewDlg"  widgetVar="RdvViewDialog" modal="true" resizable="false" appendTo="@(body)" height="40%" width="40%" header="#{bundle.ViewPatientTitle}">
+                    <h1><h:outputText value="Edit"/></h1>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <!--<p:growl id="growl" showDetail="true" sticky="true" />-->
+                    <p:outputLabel value="DateDebut:"  />
+                    <b:dateTimePicker id="datedebut" class="text-justify ui-widget "   value="#{rdvController.selected.dateDebut}"  >
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </b:dateTimePicker>
+                    <p:commandButton inline="true" id="Edit" value="Edit" icon="ui-icon-pencil" actionListener="#{rdvController.editDateRdv()}" update=":consultationRdv" oncomplete="PF('RdvViewDialog').hide()"/>
+                </p:dialog>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+

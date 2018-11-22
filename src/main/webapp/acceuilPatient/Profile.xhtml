@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/indexPatient.xhtml">
+        <ui:define name="body" >     
+            <h:outputStylesheet library="font-awesome" name="font-awesome/css/font-awesome.css"/>
+            <h:outputStylesheet library="font-awesome" name="font-awesome/css/font-awesome.min.css"/>
+            <div class="container">
+                <div class="row">
+                    <h:form id="PatientCreateForm"  >
+                        <b:panel class="fc" style="margin: 20px 20px 20px 20px;">
+                            <h:graphicImage class="center-block" id="image" alt="uploaded image" url="/image" height="100px" width="100px" style="border-radius: 100%;" />
+                            <b:inputText id="nom" class="b" value="#{patientController.selected.nom}" title="#{bundle.CreatePatientTitle_nom}" label="#{bundle.CreatePatientLabel_nom}"/>
+                            <b:inputText id="prenom" class="b" value="#{patientController.selected.prenom}" title="#{bundle.CreatePatientTitle_prenom}" label="#{bundle.CreatePatientLabel_prenom}"/>
+                            <p:outputLabel value="#{bundle.CreateMedecinLabel_dateNaissance}" /><br></br>
+                            <b:datepicker  id="dateNaissance" class="b" value="#{patientController.selected.dateNaissance}"/>
+                            <b:inputText id="adresse" class="b" value="#{patientController.selected.adresse}" title="#{bundle.CreatePatientTitle_adresse}" label="#{bundle.CreatePatientLabel_adresse}"/>
+                            <b:inputText id="cin" class="b" value="#{patientController.selected.cin}" title="#{bundle.CreatePatientTitle_cin}" label="#{bundle.CreatePatientLabel_cin}"/>
+                            <b:inputText id="gender" class="b" value="#{patientController.selected.gender}" title="#{bundle.CreatePatientTitle_gender}" label="#{bundle.CreatePatientLabel_gender}"/>
+                            <p:commandButton value="Edit"  actionListener="#{patientController.update()}" class="btn btn-info col-lg-12 b" />
+
+                        </b:panel>
+                    </h:form>
+                </div>
+            </div>
+            <p:dialog id="passwordDlg" widgetVar="passwordDialog" modal="true" resizable="false" appendTo="@(body)" showEffect="drop" hideEffect="drop"  width="60%" closable="false" rendered="#{patientController.selected.userConnexion.mdpChanged == false}">
+                <h:form id="formPasseword">
+                    <b:panel title="changer le mot de passe" id="motDePassPanel" >
+                        <b:inputSecret  id="Apassword" value="#{patientController.anciennePassword}" title="#{bundle.CreateUserConnexionTitle_password}" label="ancienne mot de pass"/>
+                        <b:inputSecret id="Npassword" value="#{patientController.nouveauPassword}" title="#{bundle.CreateUserConnexionTitle_password}" label="nouveau mot de pass"/>
+                        <b:inputSecret id="Cpassword" value="#{patientController.confirmationDeNouveauPassword}" title="#{bundle.CreateUserConnexionTitle_password}" label="confirmation de mot de pass"/>
+                    </b:panel>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-3"></div>
+                            <!--<p:commandButton id="precedantStep"  icon="ui-icon-search" value="precedant" class="btn btn-primary col-lg-2"  update=":MedecinFormDlg"  oncomplete="PF('passwordDialog').hide();setTimeout(myFunction,500)"/>-->
+                            <div class="col-lg-2"></div>
+                            <p:commandButton id="save" icon="ui-icon-plus" class="btn btn-primary col-lg-2" value="Save" actionListener="#{patientController.changePasseWord()}" />
+                            <div class="col-lg-2"></div>
+                            <p:commandButton id="NextStep"  icon="ui-icon-search" value="Next" class="btn btn-primary col-lg-2"   update=":form2"  oncomplete="PF('passwordDialog').hide();setTimeout(myFunction,500)"/>
+                        </div>
+                    </div>
+                </h:form>
+            </p:dialog>
+            <p:dialog id="MedecinFormDlg" widgetVar="patientFormDialog" modal="true" resizable="false" appendTo="@(body)" showEffect="drop" hideEffect="drop"  width="60%" closable="false">
+                <h:form id="form2" enctype="multipart/form-data">
+                    <b:panel title="Etape 2 : inserer des information" >
+                        <div class="container-fluid">
+                            <div class="rows">
+                                <div class="col-lg-6">
+                                    <b:inputText id="cin" value="#{patientController.selected.cin}" title="#{bundle.CreateMedecinTitle_cin}" label="#{bundle.CreateMedecinLabel_cin}"/>
+                                    <p:outputLabel value="#{bundle.CreateMedecinLabel_dateNaissance}" />
+                                    <b:datepicker id="popup"  value="#{patientController.selected.dateNaissance}" />
+                                    <br></br>
+                                </div>
+                                <div class="col-lg-6">
+                                    <b:inputText id="email" value="#{patientController.selected.email}"  label="#{bundle.CreateMedecinLabel_email}"/>
+                                    <b:inputText id="adresse" value="#{patientController.selected.adresse}" label="adresse"/>
+                                    <p:outputLabel value="gender"  />
+                                    <h:selectOneMenu  value="#{patientController.selected.gender}" class="col-lg-12 text-justify" style="height: 34px;border-radius: 5px;">
+                                        <f:selectItem  itemLabel="F" itemValue="f"/>
+                                        <f:selectItem  itemLabel="M" itemValue="m"/>
+                                    </h:selectOneMenu>
+                                </div>
+                            </div>
+                        </div>
+
+                    </b:panel>
+
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-1"></div>
+                            <p:commandButton id="precedantStep"  icon="ui-icon-search" value="precedent" class="btn btn-primary col-lg-2"   update=":formPasseword"  oncomplete="PF('patientFormDialog').hide();setTimeout(myFunction1,500)"/>
+                            <div class="col-lg-2"></div>
+                            <p:commandButton id="save" icon="ui-icon-plus" class="btn btn-primary col-lg-2" value="Save" actionListener="#{patientController.update()}" />
+                            <div class="col-lg-2"></div>
+                            <p:commandButton id="NextStep" icon="ui-icon-search" class="btn btn-primary col-lg-2" value="finish"  update=":PatientCreateForm" oncomplete="PF('patientFormDialog').hide()" />
+
+                        </div>
+                    </div>
+                </h:form>
+            </p:dialog>
+            <script>
+                function  myFunction() {
+                    PF('patientFormDialog').show();
+                }
+                function  myFunction1() {
+                    PF('passwordDialog').show();
+                }
+            </script>
+            <style type="text/css">
+                .fc{
+                    background-color: #cbd8ed;
+                    color: #1C4A5A;
+                    /*                    font-family: 'Cursive', sans-serif;*/
+                }
+                .souligne
+                {
+                    text-decoration: underline ;
+                    font-family: Comic Sans MS;
+                    color: #092047;
+                    right: 300px;
+                }
+                .b{
+                    font-family: Comic Sans MS;
+                }
+
+
+
+
+            </style>
+        </ui:define>
+
+    </ui:composition>
+</html>
+

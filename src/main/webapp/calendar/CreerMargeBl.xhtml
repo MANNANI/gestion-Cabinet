@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:composition>
+            <p:dialog id="MargeBloquanteCreateDlg" widgetVar="MargeBloquanteCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateMargeBloquanteTitle}">
+
+                <h:form id="MargeBloquanteCreateForm">
+                    <h:panelGroup id="display">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="#{bundle.CreateMargeBloquanteLabel_dateDebut}" for="dateDebut" />
+                            <p:calendar id="dateDebut" pattern="MM/dd/yyyy " value="#{margeBloquanteController.dateDebut}" title="#{bundle.EditMargeBloquanteTitle_dateDebut}"  showOn="button"/>
+                            <p:outputLabel value="#{bundle.CreateMargeBloquanteLabel_dateFin}" for="dateFin" />
+                            <p:calendar id="dateFin" pattern="MM/dd/yyyy " value="#{margeBloquanteController.dateFin}" title="#{bundle.EditMargeBloquanteTitle_dateFin}"  showOn="button"/>
+                            <p:outputLabel value="#{bundle.CreateMargeBloquanteLabel_color}" for="color" />
+                            <p:inputText id="color" value="#{margeBloquanteController.col}" title="#{bundle.CreateMargeBloquanteTitle_color}" />
+                            <p:outputLabel value="#{bundle.CreateMargeBloquanteLabel_medecin}" for="medecin" />
+                            <p:selectOneMenu id="medecin" value="#{margeBloquanteController.medecine}" >
+                                <f:selectItems value="#{medecinController.itemsAvailableSelectOne}" 
+                                               var="medecinItem"
+                                               itemValue="#{medecinItem}"/>
+                              <p:ajax process="medecin"  ></p:ajax>
+                            </p:selectOneMenu>
+                            
+                        </p:panelGrid>
+                    </h:panelGroup>
+                </h:form> 
+                <h:outputText value="creation de marge"></h:outputText>
+
+                <h:form id="margeItem" >
+                    <h:panelGroup id="display">
+                        <p:panelGrid columns="2" >
+                            <p:outputLabel value="#{bundle.CreateMargeItemLabel_heureDebut}" for="heureDebut" />
+                            <p:calendar id="heureDebut" pattern="HH:mm:ss" value="#{margeBloquanteController.margeItem.heureDebut}" title="#{bundle.EditMargeItemTitle_heureDebut}"  showOn="button"/>
+                            <p:outputLabel value="#{bundle.CreateMargeItemLabel_heureFin}" for="heureFin" />
+                            <p:calendar id="heureFin" pattern="HH:mm:ss" value="#{margeBloquanteController.margeItem.heureFin}" title="#{bundle.EditMargeItemTitle_heureFin}"  showOn="button"/>
+                            <p:outputLabel value="#{bundle.CreateMargeItemLabel_jour}" for="jour" />
+                            <p:inputText id="jour" value="#{margeBloquanteController.margeItem.jour}" title="#{bundle.CreateMargeItemTitle_jour}" />
+                            <p:outputLabel value="#{bundle.CreateMargeItemLabel_mois}" for="mois" />
+                            <p:inputText id="mois" value="#{margeBloquanteController.margeItem.mois}" title="#{bundle.CreateMargeItemTitle_mois}" />
+                            <p:outputLabel value="#{bundle.CreateMargeItemLabel_annee}" for="annee" />
+                            <p:inputText id="annee" value="#{margeBloquanteController.margeItem.annee}" title="#{bundle.CreateMargeItemTitle_annee}" />
+                        </p:panelGrid>
+                        <p:commandButton actionListener="#{margeBloquanteController.createMargeItem()}" value="#{bundle.Save}" update=":margeItem:dataMargeItem" />
+                    </h:panelGroup>
+                    <h1><h:outputText value="List"/></h1>
+                    <p:dataTable  id="dataMargeItem" value="#{margeBloquanteController.margeItems}" var="item">
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="HeureDebut"/>
+                            </f:facet>
+                            <h:outputText value="#{item.heureDebut}">
+                                <f:convertDateTime pattern="HH:mm:ss" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="HeureFin"/>
+                            </f:facet>
+                            <h:outputText value="#{item.heureFin}">
+                                <f:convertDateTime pattern="HH:mm:ss" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Jour"/>
+                            </f:facet>
+                            <h:outputText value="#{item.jour}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Mois"/>
+                            </f:facet>
+                            <h:outputText value="#{item.mois}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Annee"/>
+                            </f:facet>
+                            <h:outputText value="#{item.annee}"/>
+                        </p:column>
+                    </p:dataTable>
+                
+                <p:commandButton actionListener="#{margeBloquanteController.create()}" value="#{bundle.Save}"   oncomplete="handleSubmit(args,'MargeBloquanteCreateDialog');" />
+        </h:form>
+        </p:dialog> 
+            
+
+    </ui:composition>
+
+
+
+</html>
+
+

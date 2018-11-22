@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui">
+    <ui:composition template="/indexPatient.xhtml">
+        <ui:define name="body" >
+            <div class="container">
+                <h:form id="MedecinCreateForm" style="margin-top: 50px;" >
+                    <div class="row">
+                        <b:panel class="fc" style="width: 800px ;margin-left: 100px;">
+
+                            <p:graphicImage class="center-block"  url="/image"  height="100px" width="100px" style="border-radius: 100%;"  />
+
+
+                            <h:outputLabel value="#{bundle.ViewEmployeLabel_nom}" class="souligne"/>
+                            <b:inputText id="nom" class="b" value="#{adminSecretaireController.selected.nom}" title="#{bundle.CreateAdminLabel_nom}" />
+
+                            <h:outputLabel value="#{bundle.ViewEmployeLabel_prenom}" class="souligne"/>
+                            <b:inputText id="prenom" class="b" value="#{adminSecretaireController.selected.prenom}" title="#{bundle.CreateAdminLabel_prenom}"/>
+
+                            <h:outputLabel value="#{bundle.ViewEmployeLabel_dateNaissance}" class="souligne" />
+                            <b:datepicker id="dateNaissance"   class="b" value="#{adminSecretaireController.selected.dateNaissance}" />
+
+                            <h:outputLabel value="#{bundle.ViewEmployeLabel_cin}" class="souligne"/>
+                            <b:inputText id="cin" class="b" value="#{adminSecretaireController.selected.cin}" title="#{bundle.CreateAdminLabel_cin}"/>
+
+                            <h:outputLabel value="#{bundle.ViewEmployeLabel_tel}" class="souligne"/>
+                            <b:inputText id="tel" class="b" value="#{adminController.selected.tel}" title="#{bundle.CreateAdminLabel_tel}"/>
+
+                            <h:outputLabel value="#{bundle.ViewEmployeLabel_email}" class="souligne"/>
+                            <b:inputText id="email" class="b" value="#{adminSecretaireController.selected.email}" title="#{bundle.CreateAdminLabel_email}"/>
+                            <!--</p:panelGrid>-->
+                            <!--</h:panelGroup>-->
+                            <!--</h:form>-->
+                        </b:panel>
+                    </div>
+                </h:form>
+            </div>
+             <style type="text/css">
+                .fc{
+                    background-color: #cbd8ed;
+                    color: #1C4A5A;
+/*                    font-family: 'Cursive', sans-serif;*/
+                }
+                .souligne
+                {
+                    text-decoration: underline ;
+                    font-family: Comic Sans MS;
+                    color: #092047;
+                    right: 300px;
+                }
+                .b{
+                    font-family: Comic Sans MS;
+                }
+                
+
+
+
+            </style>
+        </ui:define>
+    </ui:composition>
+</html>
+

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
+
+    <h:head>
+
+        <script src="https://use.fontawesome.com/83907fc2f8.js"></script>
+            <!--<link href="css/navbar-fixed-side.css" rel="stylesheet" />-->
+        
+        <h:outputStylesheet library="bootstrap-3.3.7-dist" name="css/bootstrap.min.css"/>
+        <h:outputScript library="bootstrap-3.3.7-dist" name="js/bootstrap.min.css"/>
+        
+        <h:outputStylesheet library="font-awesome" name="css/font-awesome.css"/>
+        <h:outputStylesheet library="font-awesome" name="css/font-awesome.min.css"/>
+        
+        <h:outputStylesheet  name="css/styleInscreption.css"/>
+        <h:outputScript name="js/jsInsecription.js"/>
+    </h:head>
+    <h:body style="background-image: url('../medic-563425_1920.jpg')">
+
+        <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <a href="#">Profil</a>
+            <a href="#">Agenda</a>
+            <a href="#">Clients</a>
+            <a href="../inscription/inscriptionForm.xhtml" ><p:outputLabel class="fa fa-user" value="Profil"/></a>
+            <a href="../calendar/Agenda.xhtml" ><p:outputLabel class="fa fa-calendar" value="Agenda"/></a>
+        </div>
+
+        <div id="main">
+            
+            <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; open</span>
+
+
+            <h:form id="MedecinCreateForm"  >
+                <!--tiny-screen='half' offset-sm='3'-->
+                <b:panel rendered="#{medecinController1.selected != null}" large-screen='half' style="margin-top: 20px;">
+
+                    <b:image class="center-block" value="http://www.techiecorner.com/wp-content/uploads/2015/02/bootstrap-center-image.jpg"  height="100px" width="100px" style="border-radius: 100%;" tooltip="Ain't he a beauty?" />
+                <!--<p:outputLabel value="#{bundle.CreateMedecinLabel_nom}" for="nom" />-->
+                    <b:inputText id="nom" value="#{medecinController1.selected.nom}" title="#{bundle.CreateMedecinTitle_nom}" disabled="true" label="#{bundle.CreateMedecinLabel_nom}"/>
+
+<!--<p:outputLabel value="#{bundle.CreateMedecinLabel_prenom}" for="prenom" />-->
+                    <b:inputText id="prenom" value="#{medecinController1.selected.prenom}" title="#{bundle.CreateMedecinTitle_prenom}" disabled="true" label="#{bundle.CreateMedecinLabel_prenom}"/>
+
+<!--<p:outputLabel value="#{bundle.CreateMedecinLabel_dateNaissance}" for="dateNaissance" />-->
+                    <b:inputText id="dateNaissance"  value="#{medecinController1.selected.dateNaissance}" title="#{bundle.EditMedecinTitle_dateNaissance}" label="#{bundle.CreateMedecinLabel_dateNaissance}" disabled="true"/>
+
+<!--<p:outputLabel value="#{bundle.CreateMedecinLabel_cin}" for="cin" />-->
+                    <b:inputText id="cin" value="#{medecinController1.selected.cin}" title="#{bundle.CreateMedecinTitle_cin}" disabled="true" label="#{bundle.CreateMedecinLabel_cin}"/>
+
+                <!--<p:outputLabel value="#{bundle.CreateMedecinLabel_residence}" for="residence" />-->
+                    <b:inputText id="residence"  value="#{medecinController1.selected.residence}" label="#{bundle.CreateMedecinLabel_residence}"  disabled="true" />
+
+<!--<p:outputLabel value="#{bundle.CreateMedecinLabel_specialite}" for="specialite" />-->
+                    <b:inputText id="specialite"  value="#{medecinController1.selected.specialite}" label="#{bundle.CreateMedecinLabel_specialite}"  disabled="true"/> 
+
+                <!--<p:outputLabel value="#{bundle.CreateMedecinLabel_tel}" for="tel" />-->
+                    <b:inputText id="tel" value="#{medecinController1.selected.tel}" title="#{bundle.CreateMedecinTitle_tel}" disabled="true" label="#{bundle.CreateMedecinLabel_tel}"/>
+
+<!--<p:outputLabel value="#{bundle.CreateMedecinLabel_email}" for="email" />-->
+                    <b:inputText id="email" value="#{medecinController1.selected.email}" title="#{bundle.CreateMedecinTitle_email}" disabled="true" label="#{bundle.CreateMedecinLabel_email}"/>
+
+ <!--<p:outputLabel value="#{bundle.CreateMedecinLabel_id}" for="id" />-->
+ <!--<b:inputText id="id" value="#{medecinController1.selected.id}" title="#{bundle.CreateMedecinTitle_id}" disabled="true" label="#{bundle.CreateMedecinLabel_id}"/>-->
+                </b:panel>
+
+                <b:panel style="float: left;margin-top: 20px;" class="col-lg-6 col-md-12" tooltipPosition="left" look="info">
+                    <b:dataTable value="#{medecinSecretaireController.items}" var="item" 
+                                 page-length="5"
+                                 page-length-menu="5,10,20"
+                                 >
+                        <b:dataTableColumn value="#{item.nom} #{item.prenom}" label="Nom et Prenom"/>
+                        <b:dataTableColumn value="#{item.tel}" />
+                        <b:dataTableColumn value="#{item.cin}" />
+                        <b:dataTableColumn value="#{item.email}" />
+
+                    </b:dataTable>
+                </b:panel>
+                <div class="col-lg-6 col-md-12 config">
+                    <h3 >votre configuration</h3>
+                    <p style="text-align: center; background-color: #eeeeee; " class="rounded">
+                        l'heur de debut #{configurationController.selected.heureDebut} -----> #{configurationController.selected.heureFin}<br></br>
+                        durée de rdv est #{configurationController.selected.pas}
+                    </p>
+
+                </div>
+                <b:panel id="NotePanel" style="float: left;margin-top: 20px;"  class="col-lg-6 col-md-12">
+                    <h3>creer une note :</h3>
+                    <b:inputTextarea id="note" value="#{medecinController1.noteDesc}" label="Description"/>
+                    <p:commandButton class="btn btn-primary " icon="fa fa-save" id="creationNote" value="Save" actionListener="#{medecinController1.creationNote()}" update="NotePanel"/>
+
+
+                </b:panel>
+
+            </h:form>
+            
+            <h:form>
+                <b:panel style="margin-top: 10px;clear: both;"  class="col-lg-12 col-md-12">
+                    <b:dataTable value="#{rdvController.items}" var="item" 
+                                 page-length="5"
+                                 page-length-menu="5,10,20"
+
+                                 >
+                        <b:dataTableColumn value="#{item.patient} " label="Nom et Prenom"/>
+                        <b:dataTableColumn value="#{item.patient.gender}" label="Gender"/>
+                        <b:dataTableColumn value="#{item.dateDebut}" label="Date de debut"/>
+                        
+
+
+                    </b:dataTable>
+                </b:panel>
+            </h:form>
+        </div>
+    </h:body>
+</html>

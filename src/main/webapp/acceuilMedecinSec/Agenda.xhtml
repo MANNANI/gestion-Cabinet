@@ -1,0 +1,343 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui">
+    <ui:composition template="/indexPatient.xhtml">
+        <h:outputStylesheet name="bootstrap/css/bootstrap-select.min.css"/>
+        <ui:define name="scriptAgenda">
+            <script>
+                function marge() {
+                var x = document.getElementsByClassName("fc-day");
+//        alert(x.length);
+                var i;
+                var k = new Array();
+                k = "#{scheduleView.dateMargeString()}";
+                var res = k.split(",");
+//        alert(res);
+//    k=k.substr(1,10);
+//        alert(k);
+//        alert(typeof (k));
+                for (i = 0; i $lt; x.length; i++) {
+                var y = document.getElementsByClassName("fc-day")[i].getAttribute("data-date");
+                //       if(y &lt; "2017-04-21" &amp;&amp; y &gt; "2017-04-07"){
+                for (var j = 0; j $lt; res.length; j++){
+//                            alert(y+" === "+res[j]);
+                //                alert(res[j]);
+                if (y === res[j]){
+                document.getElementsByClassName("fc-day")[i].setAttribute("style", "background-color:red;");
+                }
+                }
+
+                }
+//    document.getElementsByClassName("fc-next-button").onclick = function() {marge();};
+//document.getElementsByClassName("fc-prev-button").onclick = function() {marge()};
+                }
+                $(document).on('click', '.fc-button-next', function() {
+                alert("messaage");
+                marge();
+                });
+                $(document).on('click', '.fc-button-prev', function() {
+                marge();
+                });
+            </script>
+        </ui:define>
+        <ui:define name="body">
+            <div style="float: left;">
+                <h:form id="Agenda" >
+                    <p:growl id="messages" showDetail="true" />
+                    <h:panelGrid columnClasses="value" style="margin-left: 30px;margin-top: 10px;">
+                        <h3 style="margin-top: 0"></h3>
+                        <p:schedule  id="schedule"  timeZone="GMT+1" value="#{scheduleView.eventModel}" widgetVar="myschedule"   slotMinutes="#{scheduleView.medecinChoisis.configuration.pas}"   >
+                            <p:ajax event="dateSelect" listener="#{scheduleView.onDateSelect}" update="eventDetails"  />
+                            <p:ajax event="eventSelect" listener="#{scheduleView.onEventSelect}" update="eventInfoDetail" />
+                            <p:ajax event="eventMove" listener="#{scheduleView.onEventMove}" update="messages" />
+                        </p:schedule>
+                    </h:panelGrid>
+                    <p:dialog widgetVar="eventDialog" modal="true"  header="Rendez vous creation" showEffect="clip" hideEffect="clip">
+                        <h:panelGrid id="eventDetails" >
+                            <h:form>
+                                <b:label text="Patient :" />
+                                <b:selectOneMenu  value="#{scheduleView.patient}">
+                                    <f:selectItems value="#{patientController.itemsAvailableSelectOne}"
+                                                   var="patientItem"
+                                                   itemValue="#{patientItem}"/>
+                                </b:selectOneMenu>
+                                <p:outputLabel value="#{bundle.CreateRdvLabel_dateDebut}" for="dateDebut" />
+                                <p:calendar id="dateDebut"  stepMinute="#{scheduleView.medecinChoisis.configuration.pas}" pattern="MM/dd/yyyy HH:mm:ss" timeZone="GMT+1"  value="#{scheduleView.selected.dateDebut}" title="Date du rendez vous :" >
+                                    <p:ajax event="change" process="dateDebut" listener="#{scheduleView.checkValiditeDate()}" update="test"/> 
+                                </p:calendar>
+                                <h:outputText id="test" value="#{scheduleView.message()}" styleClass="message" />  
+                                <p:commandButton id="addButton" value="Save" actionListener="#{scheduleView.addEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
+                            </h:form>
+                        </h:panelGrid>
+                    </p:dialog> 
+
+                    <p:dialog widgetVar="eventInfo" header="Modification de RDv" showEffect="clip" hideEffect="clip">
+                        <h:panelGrid id="eventInfoDetail" columns="2">
+                            <h:form>
+                                <p:outputLabel for="from2" value="From:" />
+                                <p:calendar id="from2" stepMinute="#{scheduleView.medecinChoisis.configuration.pas}" value="#{scheduleView.event.startDate}" timeZone="GMT+1" pattern="dd/MM/yyyy HH:mm">
+                                    <p:ajax process="from2" event="dateSelect" listener="#{scheduleView.setEventDateFin()}" update="to2"/>
+                                </p:calendar>
+                                <p:outputLabel for="to2" value="To:" />
+                                <p:calendar id="to2"   stepMinute="#{scheduleView.medecinChoisis.configuration.pas}"  value="#{scheduleView.event.endDate}" timeZone="GMT+1" pattern="dd/MM/yyyy HH:mm"/>
+                                <p:outputLabel value="Patient:" for="patient2" />
+                                <p:inputText id="patient2" value="#{scheduleView.selected.patient}" title="patient" />
+                                <p:outputLabel value="Medecin:" for="medecin2" />
+                                <p:inputText id="medecin2" value="#{scheduleView.selected.medecin}" title="medecin" converter="medecinControllerConverter" />
+                                <p:commandButton id="modif" icon="ui-icon-pencil" value="Edit" actionListener="#{scheduleView.modifierEvent}" oncomplete="PF('myschedule').update();PF('eventInfo').hide();"/>
+                                <p:commandButton id="suppButton" icon="ui-icon-trash" value="Remove" actionListener="#{scheduleView.suppEvent}" oncomplete="PF('myschedule').update();PF('eventInfo').hide();" />
+                            </h:form>
+                        </h:panelGrid>
+                    </p:dialog> 
+
+
+                </h:form>
+            </div>
+            <div class="notee">
+
+                <h:form id="fromNoteService" >
+                    <p:carousel value="#{scheduleView.noteServices}" headerText="Mes notes" var="val"   responsive="true">
+                            <div class="quote-container">
+                                <i class="pin"></i>
+                                <blockquote class="note yellow">
+                                    #{val.note}
+                                    <cite class="author">#{val.medecin.nom}  #{val.medecin.prenom}</cite>
+                                </blockquote>
+                            </div>
+                    </p:carousel> 
+
+
+<!--                    <p:dataTable id="datalist"  value="#{scheduleView.noteServices}" var="val"
+             selectionMode="single" 
+             rowKey="#{val.id}"
+
+             rows="3">
+    
+    <p:column class="styless" >
+        <f:facet name="header">
+            <h:outputText value="#{bundle.ListNoteServiceTitle_note}"/>
+        </f:facet>
+        <h:outputText value="#{val.note}"/>
+    </p:column>
+    <p:column class="styless" >
+        <f:facet name="header">
+            <h:outputText value="From"/>
+        </f:facet>
+        <h:outputText value="Dr.#{val.medecin.nom}"/>
+    </p:column>
+    <p:column class="styless" >
+        <f:facet name="header">
+            <h:outputText value="Action"/>
+        </f:facet>
+        <p:commandButton id="createButton"  icon="ui-icon-plus"   value="#{bundle.Create}" oncomplete="PF('MargeBloquanteCreateDialog').show()"/>
+        <p:commandButton id="deleteButton"  icon="ui-icon-trash" value="Delete"  actionListener="#{noteServiceController.destroy()}" update="fromNoteService" />
+
+    </p:column>
+</p:dataTable>-->
+                </h:form>
+                <br></br>
+                <br></br>
+
+                <br></br>
+                <br></br>
+
+
+            </div>
+
+            <style type="text/css">
+                .quote-container {
+                    margin-top: 30px;
+                    margin-left: 50px;
+                    position: relative;
+                }
+                .ui-carousel-item{
+                    border-style: hidden;
+                     background-color: #ecf0f5;
+                }
+                .ui-carousel-header{
+                    background-color: #0cb8b6;
+                }
+                .ui-carousel{
+                    border-style: hidden;
+                    background-color: #ecf0f5;
+                }
+                .note {
+                    color: #333;
+                    position: relative;
+                    width: 200px;
+                    margin: 0 auto;
+                    padding: 20px;
+                    font-family: Satisfy;
+                    font-size: 30px;
+                    
+                    /*box-shadow: 0 10px 10px 2px rgba(0,0,0,0.3);*/
+                }
+
+                .note .author {
+                    display: block;
+                    /*                    margin: 40px 0 0 0;*/
+                    text-align: right;
+                }
+
+                .yellow {
+                    background: #eae672;
+                    border-left-width: 0px;
+                    -webkit-transform: rotate(2deg);
+                    -moz-transform: rotate(2deg);
+                    -o-transform: rotate(2deg);
+                    -ms-transform: rotate(2deg);
+                    transform: rotate(2deg);
+                }
+
+                .pin {
+                    background-color: #aaa;
+                    display: block;
+                    height: 32px;
+                    width: 2px;
+                    position: absolute;
+                    left: 50%;
+                    top: -16px;
+                    z-index: 1;
+                }
+
+                .pin:after {
+                    background-color: #A31;
+                    background-image: radial-gradient(25% 25%, circle, hsla(0,0%,100%,.3), hsla(0,0%,0%,.3));
+                    border-radius: 50%;
+                    box-shadow: inset 0 0 0 1px hsla(0,0%,0%,.1),
+                        inset 3px 3px 3px hsla(0,0%,100%,.2),
+                        inset -3px -3px 3px hsla(0,0%,0%,.2),
+                        23px 20px 3px hsla(0,0%,0%,.15);
+                    content: '';
+                    height: 12px;
+                    left: -5px;
+                    position: absolute;
+                    top: -10px;
+                    width: 12px;
+                }
+
+                .pin:before {
+                    background-color: hsla(0,0%,0%,0.1);
+                    box-shadow: 0 0 .25em hsla(0,0%,0%,.1);
+                    content: '';
+
+                    height: 24px;
+                    width: 2px;
+                    left: 0;
+                    position: absolute;
+                    top: 8px;
+
+                    transform: rotate(57.5deg);
+                    -moz-transform: rotate(57.5deg);
+                    -webkit-transform: rotate(57.5deg);
+                    -o-transform: rotate(57.5deg);
+                    -ms-transform: rotate(57.5deg);
+
+                    transform-origin: 50% 100%;
+                    -moz-transform-origin: 50% 100%;
+                    -webkit-transform-origin: 50% 100%;
+                    -ms-transform-origin: 50% 100%;
+                    -o-transform-origin: 50% 100%;
+                }
+
+
+
+                .value {
+                    width: 500px;
+                }
+                .colorRdv{
+                    background-color: #0cb8b6;
+                }
+                .EventBloque{
+                    background-color: red;
+
+                }
+                .styleCss{
+                    background-color: yellow;
+
+                }
+                .notee{
+                    position: fixed;
+                    margin-left: 50%;
+                    width: 22%;
+                    height:100px;
+                    margin-top: 5%;
+                }
+                .styless{
+                    /*                    background-image: url('../resources/img/paper.jpg');*/
+                    border-left: 6px solid #1C4A5A;
+                    border-color: #1C4A5A;
+                    background-color: #0cb8b6;
+                }
+                .message{
+                    font-size: small;
+                    color: red;
+
+                }
+                .eventNonBloque{
+                    background-color: orange;  
+                }
+                .styleListPatient{
+                    font-size: large;
+                    color: green;
+                }
+                .fc-axis{
+                    background-color: #1C4A5A;
+                    color: #0cb8b6;
+                    /* -webkit-border-radius: 1em;*/
+                }
+                .fc-time-grid-container ,.fc-scroller{
+                    background-color:#1C4A5A;
+
+                }
+                .fc-day-header{
+                    font-family: 'Cursive', sans-serif;
+                    background-color: #0cb8b6;
+                    color: #1C4A5A;
+                    border-style: solid;
+                    border-color:  #1C4A5A;
+
+                }
+                .ui-datatable-tablewrapper{
+                    border-style: groove;
+                    border-color: #1C4A5A;
+                    border-radius: 12px;
+                    color: #1C4A5A;
+                    font-family: 'Cursive', sans-serif;
+                }
+                .ui-dialog{
+                    border-style: double;
+                    border-color: #00733e;
+                    border-radius: 12px;  
+                }
+                .ui-dialog-titlebar{
+                    background-color: #0cb8b6;
+                    color: #1C4A5A;
+                    font-family: 'Cursive', sans-serif;
+                    -webkit-border-radius: 1em;
+                }
+
+                .fc-agendaWeek-button,.fc-month-button,.fc-agendaDay-button,.fc-today-button,.fc-next-button,.fc-prev-button {
+                    background-color: #0cb8b6;
+                    color: #1C4A5A;
+                    font-family: 'Cursive', sans-serif;
+                    -webkit-border-radius: 1em;
+                }
+                .fc-day-number{
+                    color: #1C4A5A;
+                }
+            </style>
+            <ui:include src="CreerMargeBl.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+
+
+
+</html>
+

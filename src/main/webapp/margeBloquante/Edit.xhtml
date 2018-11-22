@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MargeBloquanteEditDlg" widgetVar="MargeBloquanteEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditMargeBloquanteTitle}">
+            <h:form id="MargeBloquanteEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{margeBloquanteController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditMargeBloquanteLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{margeBloquanteController.selected.id}" title="#{bundle.EditMargeBloquanteTitle_id}" />
+                        <p:outputLabel value="#{bundle.EditMargeBloquanteLabel_dateDebut}" for="dateDebut" />
+                        <p:calendar id="dateDebut" pattern="MM/dd/yyyy HH:mm:ss" value="#{margeBloquanteController.selected.dateDebut}" title="#{bundle.EditMargeBloquanteTitle_dateDebut}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditMargeBloquanteLabel_dateFin}" for="dateFin" />
+                        <p:calendar id="dateFin" pattern="MM/dd/yyyy HH:mm:ss" value="#{margeBloquanteController.selected.dateFin}" title="#{bundle.EditMargeBloquanteTitle_dateFin}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditMargeBloquanteLabel_color}" for="color" />
+                        <p:inputText id="color" value="#{margeBloquanteController.selected.color}" title="#{bundle.EditMargeBloquanteTitle_color}" />
+                        <p:outputLabel value="#{bundle.EditMargeBloquanteLabel_medecin}" for="medecin" />
+                        <p:selectOneMenu id="medecin" value="#{margeBloquanteController.selected.medecin}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{medecinController.itemsAvailableSelectOne}"
+                                           var="medecinItem"
+                                           itemValue="#{medecinItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{margeBloquanteController.update}" value="#{bundle.Save}" update="display,:MargeBloquanteListForm:datalist,:growl" oncomplete="handleSubmit(args, 'MargeBloquanteEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="MargeBloquanteEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

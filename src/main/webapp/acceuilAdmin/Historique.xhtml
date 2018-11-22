@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/indexPatient.xhtml">
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListUserConnexionTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:outputStylesheet name="css/comptes.css"/>
+            <div class="row" >
+                <h:form id="DeviceListForm" style="margin : 50px 50px 100px 50px;">
+                    <p:panel header="Historique des connexions">
+                        <p:dataTable class="responstable" id="datalist" value="#{userConnexionController.devices}" var="itemD"
+                                     paginator="true"
+                                     rowKey="#{itemD.id}"
+                                     rows="10"
+                                     rowsPerPageTemplate="10,20,30,40,50"
+                                     >
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundle.ListDeviceTitle_nom}"/>
+                                </f:facet>
+                                <h:outputText value="#{itemD.nom}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundle.ListDeviceTitle_adresseMac}"/>
+                                </f:facet>
+                                <h:outputText value="#{itemD.adresseMac}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundle.ListDeviceTitle_adresseIP}"/>
+                                </f:facet>
+                                <h:outputText value="#{itemD.adresseIP}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Date d'entrer"/>
+                                </f:facet>
+                                <h:outputText value="#{itemD.dateEntree}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Date de sortir"/>
+                                </f:facet>
+                                <h:outputText value="#{itemD.dateSortie}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </p:panel>
+                </h:form>
+                <!--</dir>-->
+            </div>
+            <!--</div>-->
+        </ui:define>
+
+    </ui:composition>
+
+</html>

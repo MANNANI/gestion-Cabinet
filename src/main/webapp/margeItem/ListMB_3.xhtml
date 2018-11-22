@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
+
+    <h:head><f:facet name="first">
+            <meta charset="utf-8"/>
+            <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        </f:facet>
+
+        <f:facet name="seconde">
+            <h:outputStylesheet name="/bootstrap-3.3.7-dist/css/bootstrap.css"/>
+
+            <h:outputStylesheet  name="/bootstrap-3.3.7-dist/js/bootstrap.js"/>
+        </f:facet>
+
+        <h:outputScript name="/inscription/javascript.js"/>
+
+        <script src="https://use.fontawesome.com/83907fc2f8.js"></script>
+        <!--<link href="css/navbar-fixed-side.css" rel="stylesheet" />-->
+
+        <h:outputStylesheet library="bootstrap-3.3.7-dist" name="css/bootstrap.min.css"/>
+        <h:outputScript library="bootstrap-3.3.7-dist" name="js/bootstrap.min.js"/>
+
+        <h:outputStylesheet library="font-awesome" name="css/font-awesome.css"/>
+        <h:outputStylesheet library="font-awesome" name="css/font-awesome.min.css"/>
+
+        <h:outputStylesheet library="css" name="styleInscreption.css"/>
+        <h:outputScript name="js/jsInsecription.js"/>
+
+
+    </h:head>
+    <h:body>
+        <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+<a href="../inscription/insecr.xhtml" ><p:outputLabel class="fa fa-user" value="Profil"/></a>
+        </div>
+
+            
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12">
+                        <b:panel style="float: left;margin-top: 20px;" class="col-lg-12 col-md-12" tooltipPosition="left" look="info">
+                            <h2 >La Liste des marges Non bloquantes :</h2>
+
+                            <b:dataTable value="#{margeNonBloquanteController.items}" var="item" 
+                                         page-length="5"
+                                         page-length-menu="5,10,20"
+                                         >
+                                <b:dataTableColumn value="#{item.id}"/>
+                                <b:dataTableColumn value="#{item.dateDebut}" />
+                                <b:dataTableColumn value="#{item.dateFin}" />
+                                <b:dataTableColumn value="#{item.medecin}" />
+
+
+                            </b:dataTable>
+                            <p:commandButton id="delet" icon="ui-icon-plus" class="btn btn-primary col-lg-2" value="delet" actionListener="#{margeNonBloquanteController.destroy}" />
+
+                        </b:panel>
+
+                        
+    </div>
+    </div>
+  
+                </div>
+                
+    </h:body>
+
+</html>

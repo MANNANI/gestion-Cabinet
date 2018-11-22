@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Veuillez choisir un medecin"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="MedecinListForm">
+                <p:panel header="Veuillez choisir un medecin">
+                    <p:dataTable id="datalist" value="#{medecinController1.items}" var="item"
+                                 selectionMode="single" selection="#{medecinController1.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.id}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+<!--                        <p:ajax    process="item" listener="#{medecinController.choixMedecin()}" />-->
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListMedecinTitle_id}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.id}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListMedecinTitle_specialite}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.specialite}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListMedecinTitle_residence}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.residence}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListMedecinTitle_configuration}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.configuration}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListMedecinTitle_dateNaissance}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.dateNaissance}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListMedecinTitle_cin}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.cin}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListMedecinTitle_tel}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.tel}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListMedecinTitle_email}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.email}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListMedecinTitle_nom}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nom}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListMedecinTitle_prenom}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.prenom}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="searchB" icon="ui-icon-search"  value="Recherche" actionListener="#{medecinController1.prepareCreate}" update=":growl,datalist,:MedecinRechercheForm"  oncomplete="PF('MedecinRechercheDialog').show()" disabled="#{empty medecinController1.selected}"/>
+                            <p:commandButton id="valider" icon=" ui-icon-check"  value="check" action="#{medecinController1.choixMedecin()}" />
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+            <ui:include src="recherche.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>
+
+

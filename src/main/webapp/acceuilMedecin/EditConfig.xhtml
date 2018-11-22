@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ConfigurationEditDlg" widgetVar="ConfigurationEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditConfigurationTitle}">
+            <h:form id="ConfigurationEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{configurationController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditConfigurationLabel_heureDebut}" for="heureDebut" />
+                        <b:dateTimePicker id="heureDebut"  value="#{configurationController.selected.heureDebut}"  />
+                        <p:outputLabel value="#{bundle.EditConfigurationLabel_heureFin}" for="heureFin" />
+                        <b:dateTimePicker id="heureFin"  value="#{configurationController.selected.heureFin}"   />
+                        <p:outputLabel value="#{bundle.EditConfigurationLabel_pas}" for="pas" />
+                        <p:inputText id="pas" value="#{configurationController.selected.pas}" title="#{bundle.EditConfigurationTitle_pas}" />
+                        <p:outputLabel value="#{bundle.EditConfigurationLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{configurationController.selected.id}" title="#{bundle.EditConfigurationTitle_id}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{configurationController.update}" value="#{bundle.Save}" update="display,:ConfigurationListForm" oncomplete="handleSubmit(args, 'ConfigurationEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ConfigurationEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

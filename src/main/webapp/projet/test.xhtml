@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
+
+    <h:head>
+
+        <meta charset="UTF-8"/>
+        <!--<meta name="viewport" content="width=device-width, initial-scale=1"/>-->
+    </h:head>
+
+    <!--<h:outputStylesheet library="css" name="style.css" />-->
+
+
+
+    <h:body >
+        <p:growl id="msgs" showDetail="true" />
+
+        <h:form style="margin-top: 100px;">
+            <h:panelGroup id="display">
+                <h3>Recherche par rapport aux informations personnelles :</h3>
+                <p:panelGrid columns="2">
+
+                    <p:calendar  navigator="true" pattern="dd/mm/yyyy" value="#{adminSecretaireController.dateMax}" showOn="button"/>
+                    <!--                      <b:label text="date de nas"/>
+                                          <b:dateTimePicker keep-open="false"
+                                    
+                                    iconAwesome="bolt"
+                                    widgetParent="#picker-anchor"
+                                    />-->
+                                            <!--<b:datepicker id="dateNaissance" value="#{adminSecretaireController.dateMin}" showButtonPanel="true" />-->
+                    <!--                        <b:label text="date de nas"/>
+                                            <b:datepicker class="text-justify ui-widget" id="dateNaissance2" value="#{adminSecretaireController.dateMin}" />-->
+                                            <!--<b:calendar id="dateNaissance" pattern="MM/dd/yyyy" value="#{adminSecretaireController.dateMin}" title="#{bundle.EditAdminSecretaireTitle_dateNaissance}"  showOn="button"/>-->
+                    <p:outputLabel value="date max" for="dateNaissance1" />
+                    <p:calendar id="dateNaissance1" pattern="MM/dd/yyyy" value="#{adminSecretaireController.dateMax}" title="#{bundle.EditAdminSecretaireTitle_dateNaissance}"  showOn="button"/>
+                    <p:outputLabel value="#{bundle.CreateAdminSecretaireLabel_cin}" for="cin" />
+                    <p:inputText id="cin" value="#{adminSecretaireController.selected.cin}" title="#{bundle.CreateAdminSecretaireTitle_cin}" />
+                    <p:outputLabel value="#{bundle.CreateAdminSecretaireLabel_tel}" for="tel" />
+                    <p:inputText id="tel" value="#{adminSecretaireController.selected.tel}" title="#{bundle.CreateAdminSecretaireTitle_tel}" />
+                    <p:outputLabel value="#{bundle.CreateAdminSecretaireLabel_email}" for="email" />
+                    <p:inputText id="email" value="#{adminSecretaireController.selected.email}" title="#{bundle.CreateAdminSecretaireTitle_email}" />
+                    <p:outputLabel value="#{bundle.CreateAdminSecretaireLabel_nom}" for="nom" />
+                    <p:inputText id="nom" value="#{adminSecretaireController.selected.nom}" title="#{bundle.CreateAdminSecretaireTitle_nom}" />
+                    <p:outputLabel value="#{bundle.CreateAdminSecretaireLabel_prenom}" for="prenom" />
+                    <p:inputText id="prenom" value="#{adminSecretaireController.selected.prenom}" title="#{bundle.CreateAdminSecretaireTitle_prenom}" />
+                </p:panelGrid>>
+                <h3>Recherche par rapport aux comptes :</h3>
+                <!--                    <b:panel>
+                                        <b:inputText id="etat" value="Etat compte" />
+                                        <b:selectOneMenu  value="#{adminSecretaireController.typeBloquage}"   >
+                                            <f:selectItem value="Bloquer"  itemLabel="Bloquer"/>
+                                            <f:selectItem value="NonBloquer"   itemLabel="NonBloquer"/>
+                                        </b:selectOneMenu>
+                                        <b:inputText id="mdp" value="Etat mot de passe" />
+                                        <b:selectOneMenu  value="#{adminSecretaireController.etatMdp}"   >
+                                            <f:selectItem value="Changer"  itemLabel="Changer"/>
+                                            <f:selectItem value="NonChanger"   itemLabel="NonChanger"/>
+                                        </b:selectOneMenu>
+                                    </b:panel>-->
+                <p:commandButton actionListener="#{adminSecretaireController.recherche()}" value="Rechercher" update=":datalist" />
+
+            </h:panelGroup>
+
+        </h:form>
+
+        <p:dataTable  style="margin-top: 100px;" id="datalist" value="#{adminSecretaireController.items}" var="item"
+                      selectionMode="single" selection="#{adminSecretaireController.selected}"
+
+                      rowKey="#{item.id}"
+                      >
+            <p:column style=" border: #ffffff;">
+                <b:panel style="margin: 20px 0 20px 0;">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <b:image class="center-block center-block"  value="../jesse-orrico-60373.jpg"  height="100px" width="100px" style="border-radius: 100%;margin-top: 50px;" tooltip="Ain't he a beauty?" />
+                                <p:commandButton class="center-block btn btn-primary" value="details" action="#{adminSecretaireController.detailSec()}"/>
+                            </div>
+                            <div class="col-lg-6">
+
+                                <b:inputText value="#{item.nom}" title="#{bundle.CreateMedecinTitle_nom}"   label="nom"/>
+                                <b:inputText value="#{item.prenom}" title="#{bundle.CreateMedecinTitle_nom}"   label="prenom"/>
+
+                                <b:inputText  value="#{item.tel}" title="#{bundle.CreateMedecinTitle_tel}"  label="#{bundle.CreateMedecinLabel_tel}"/>
+
+                                <b:inputText  value="#{item.email}" title="#{bundle.CreateMedecinTitle_email}"  label="#{bundle.CreateMedecinLabel_email}"/>
+                                <b:inputText  value="#{item.cin}" title="#{bundle.CreateMedecinTitle_cin}"  label="#{bundle.CreateMedecinLabel_cin}"/>
+
+                            </div>
+
+
+                            <div id="googleMap" class="col-lg-4" style="width:300px;height:200px;border: 5px;opacity: 1;" ></div>
+
+
+                        </div>
+                    </div>
+                </b:panel>
+
+
+
+
+            </p:column>
+
+        </p:dataTable>
+    </h:body>
+
+
+</html>
+

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DeviceViewDlg" widgetVar="DeviceViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewDeviceTitle}">
+            <h:form id="DeviceViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{deviceController.selected != null}">
+                        <h:outputText value="#{bundle.ViewDeviceLabel_id}"/>
+                        <h:outputText value="#{deviceController.selected.id}" title="#{bundle.ViewDeviceTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewDeviceLabel_nom}"/>
+                        <h:outputText value="#{deviceController.selected.nom}" title="#{bundle.ViewDeviceTitle_nom}"/>
+                        <h:outputText value="#{bundle.ViewDeviceLabel_adresseMac}"/>
+                        <h:outputText value="#{deviceController.selected.adresseMac}" title="#{bundle.ViewDeviceTitle_adresseMac}"/>
+                        <h:outputText value="#{bundle.ViewDeviceLabel_adresseIP}"/>
+                        <h:outputText value="#{deviceController.selected.adresseIP}" title="#{bundle.ViewDeviceTitle_adresseIP}"/>
+                        <h:outputText value="#{bundle.ViewDeviceLabel_userConnexion}"/>
+                        <h:outputText value="#{deviceController.selected.userConnexion}" title="#{bundle.ViewDeviceTitle_userConnexion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="DeviceViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

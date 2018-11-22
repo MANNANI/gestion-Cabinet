@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AdminSecretaireViewDlg" widgetVar="AdminSecretaireViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewAdminSecretaireTitle}">
+            <h:form id="AdminSecretaireViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{adminSecretaireController.selected != null}">
+                        <h:outputText value="#{bundle.ViewAdminSecretaireLabel_admin}"/>
+                        <h:outputText value="#{adminSecretaireController.selected.admin}" title="#{bundle.ViewAdminSecretaireTitle_admin}"/>
+                        <h:outputText value="#{bundle.ViewAdminSecretaireLabel_dateNaissance}"/>
+                        <h:outputText value="#{adminSecretaireController.selected.dateNaissance}" title="#{bundle.ViewAdminSecretaireTitle_dateNaissance}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewAdminSecretaireLabel_cin}"/>
+                        <h:outputText value="#{adminSecretaireController.selected.cin}" title="#{bundle.ViewAdminSecretaireTitle_cin}"/>
+                        <h:outputText value="#{bundle.ViewAdminSecretaireLabel_tel}"/>
+                        <h:outputText value="#{adminSecretaireController.selected.tel}" title="#{bundle.ViewAdminSecretaireTitle_tel}"/>
+                        <h:outputText value="#{bundle.ViewAdminSecretaireLabel_email}"/>
+                        <h:outputText value="#{adminSecretaireController.selected.email}" title="#{bundle.ViewAdminSecretaireTitle_email}"/>
+                        <h:outputText value="#{bundle.ViewAdminSecretaireLabel_nom}"/>
+                        <h:outputText value="#{adminSecretaireController.selected.nom}" title="#{bundle.ViewAdminSecretaireTitle_nom}"/>
+                        <h:outputText value="#{bundle.ViewAdminSecretaireLabel_prenom}"/>
+                        <h:outputText value="#{adminSecretaireController.selected.prenom}" title="#{bundle.ViewAdminSecretaireTitle_prenom}"/>
+                         </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="AdminSecretaireViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

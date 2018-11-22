@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SpecialiteCreateDlg" widgetVar="SpecialiteCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateSpecialiteTitle}">
+            <h:form id="SpecialiteCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{specialiteController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateSpecialiteLabel_type}" for="type" />
+                        <p:inputText id="type" value="#{specialiteController.selected.type}" title="#{bundle.CreateSpecialiteTitle_type}" />
+                        <p:outputLabel value="#{bundle.CreateSpecialiteLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{specialiteController.selected.id}" title="#{bundle.CreateSpecialiteTitle_id}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{specialiteController.create}" value="#{bundle.Save}" update="display,:SpecialiteListForm:datalist,:growl" oncomplete="handleSubmit(args,'SpecialiteCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="SpecialiteCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

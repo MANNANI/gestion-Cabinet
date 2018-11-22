@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+
+      xmlns:b="http://bootsfaces.net/ui">
+
+    <h:head>
+
+        <f:facet name="first">
+            <meta charset="utf-8"/>
+            <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        </f:facet>
+
+        <f:facet name="seconde">
+            <h:outputStylesheet name="/bootstrap-3.3.7-dist/css/bootstrap.css"/>
+
+            <h:outputStylesheet  name="/bootstrap-3.3.7-dist/js/bootstrap.js"/>
+        </f:facet>
+
+        <h:outputScript name="/inscription/javascript.js"/>
+
+        <script src="https://use.fontawesome.com/83907fc2f8.js"></script>
+        <!--<link href="css/navbar-fixed-side.css" rel="stylesheet" />-->
+
+        <h:outputStylesheet library="bootstrap-3.3.7-dist" name="css/bootstrap.min.css"/>
+        <h:outputScript library="bootstrap-3.3.7-dist" name="js/bootstrap.min.js"/>
+
+        <h:outputStylesheet library="font-awesome" name="css/font-awesome.css"/>
+        <h:outputStylesheet library="font-awesome" name="css/font-awesome.min.css"/>
+
+        <h:outputStylesheet library="css" name="styleInscreption.css"/>
+        <h:outputScript name="js/jsInsecription.js"/>
+
+    </h:head>
+
+
+    <h:body onload="PF('passwordDialog').show()" >
+        <!--<h:body style="background-image: url('../medic-563425_1920.jpg')">-->
+        <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+            <a href="../inscription/insecr.xhtml" ><p:outputLabel class="fa fa-user" value="Profil"/></a>
+            <a href="../calendar/Agenda.xhtml"><p:outputLabel class="fa fa-calendar" value="Agenda" /></a>
+            <a href="../patient/List.xhtml"><p:outputLabel class="fa fa-bed" value="patient" /></a>
+        </div>
+
+        <div id="main">
+            <div class="container-fluid">
+                <div class="row">
+                    <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; open</span>
+                    <div style="float: right">
+                        <p:commandButton value="déconnecter" icon="fa fa-sign-out" class="btn btn-default" action="#{patientController.signOut()}" />
+                    </div>
+                </div>
+            </div>
+            <h:form id="MedecinCreateForm"  >
+                <!--tiny-screen='half' offset-sm='3'-->
+                <div class="container">
+                    <div class="row">
+                        <b:panel  style="margin: 20px 0 20px 0;">
+
+
+                            <b:image class="center-block"  value="../jesse-orrico-60373.jpg"  height="100px" width="100px" style="border-radius: 100%;" tooltip="Ain't he a beauty?" />
+
+
+                            <b:inputText id="nom" value="#{patientController.selected.nom}" title="#{bundle.CreatePatientTitle_nom}" label="#{bundle.CreatePatientLabel_nom}"/>
+
+                            <b:inputText id="prenom" value="#{patientController.selected.prenom}" title="#{bundle.CreatePatientTitle_prenom}" label="#{bundle.CreatePatientLabel_prenom}"/>
+
+
+                            <b:inputText  id="dateNaissance" value="#{patientController.selected.dateNaissance}" title="#{bundle.CreatePatientTitle_adresse}" label="#{bundle.CreatePatientLabel_dateNaissance}"/>
+
+
+                            <b:inputText id="adresse" value="#{patientController.selected.adresse}" title="#{bundle.CreatePatientTitle_adresse}" label="#{bundle.CreatePatientLabel_adresse}"/>
+
+                            <b:inputText id="cin" value="#{patientController.selected.cin}" title="#{bundle.CreatePatientTitle_cin}" label="#{bundle.CreatePatientLabel_cin}"/>
+
+                            <b:inputText id="gender" value="#{patientController.selected.gender}" title="#{bundle.CreatePatientTitle_gender}" label="#{bundle.CreatePatientLabel_gender}"/>
+
+                            <p:commandButton value="Edit" actionListener="#{patientController.update()}" class="btn btn-info col-lg-12" />
+                        </b:panel>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <b:panel  style="background-color: #e7e7e7;" >
+                            <!--  <p:outputLabel value="Specialite" class="col-lg-1"/>
+                            -->
+                            <p:outputLabel value="#{bundle.CreateMedecinLabel_specialite}" for="specialite" class="col-lg-1"/>
+                            <p:selectOneMenu id="specialite" value="#{medecinController1.selected.specialite}" class="col-lg-1">
+                                <f:selectItems value="#{specialiteController.itemsAvailableSelectOne}"
+                                               var="specialiteItem"
+                                               itemValue="#{specialiteItem}"/>
+                            </p:selectOneMenu>
+                            <div class="col-lg-1"></div>
+                            <p:outputLabel value="#{bundle.CreateMedecinLabel_residence}" for="residence" class="col-lg-1"/>
+                            <p:selectOneMenu id="residence" value="#{medecinController1.selected.residence}" class="col-lg-1  ">
+                                <f:selectItems value="#{residenceController.itemsAvailableSelectOne}" 
+                                               var="residenceItem"
+                                               itemValue="#{residenceItem}"/>
+                            </p:selectOneMenu>
+                            <div class="col-lg-1"></div>
+                            <p:outputLabel value="#{bundle.CreatePatientLabel_nom}" for="nom" class="col-lg-1"/>
+                            <p:inputText id="nom1" value="#{null}" class="col-lg-1"/>
+                            <div class="col-lg-1"></div>
+                            <p:commandButton value="search"  class="col-lg-1"/>
+
+
+
+
+                        </b:panel>
+                    </div>
+                </div>
+            </h:form>
+
+            <h:form id="forms">
+                <p:panel>
+                    <p:dataTable id="datalist" value="#{medecinController1.items}" var="item"
+                                 selectionMode="single" 
+                                 paginator="true"
+                                 rowKey="#{item.id}"
+
+
+                                 >
+
+
+                        <p:column>
+                            <b:panel style="margin: 20px 0 20px 0;">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-lg-2">
+                                            <b:image class="center-block center-block"  value="../jesse-orrico-60373.jpg"  height="100px" width="100px" style="border-radius: 100%;margin-top: 50px;" tooltip="Ain't he a beauty?" />
+                                            <p:commandButton class="center-block btn btn-primary" value="rdv"/>
+                                        </div>
+                                        <div class="col-lg-6">
+
+                                            <b:inputText value="Dr.#{item.nom}" title="#{bundle.CreateMedecinTitle_nom}"   label="#{bundle.CreateMedecinLabel_nom}"/>
+
+                                            <b:inputText  value="#{item.tel}" title="#{bundle.CreateMedecinTitle_tel}"  label="#{bundle.CreateMedecinLabel_tel}"/>
+
+                                            <b:inputText  value="#{item.email}" title="#{bundle.CreateMedecinTitle_email}"  label="#{bundle.CreateMedecinLabel_email}"/>
+                                        </div>
+
+
+                                        <div id="googleMap" class="col-lg-4" style="width:300px;height:200px;border: 5px;opacity: 1;" ></div>
+
+
+                                    </div>
+                                </div>
+                            </b:panel>
+
+                        </p:column>
+
+                    </p:dataTable>
+                </p:panel>
+                <script>
+                    function myMap() {
+                        var mapProp = {
+                            center: new google.maps.LatLng(40.508742, -0.150850),
+                            zoom: 5,
+                        };
+                        var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+                    }
+                </script>
+
+                <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA4-qePgG-E5vnu_NpmLtdlAuqGb-EZLxo&amp;callback=myMap"></script>
+
+            </h:form>
+        </div>
+
+
+    </h:body>
+
+</html>
+

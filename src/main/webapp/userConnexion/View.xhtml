@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="UserConnexionViewDlg" widgetVar="UserConnexionViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewUserConnexionTitle}">
+            <h:form id="UserConnexionViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{userConnexionController.selected != null}">
+                        <h:outputText value="#{bundle.ViewUserConnexionLabel_userConnexion}"/>
+                        <h:outputText value="#{userConnexionController.selected}" title="#{bundle.ViewUserConnexionTitle_userConnexion}"/>
+                        <h:outputText value="#{bundle.ViewUserConnexionLabel_login}"/>
+                        <h:outputText value="#{userConnexionController.selected.login}" title="#{bundle.ViewUserConnexionTitle_login}"/>
+                        <h:outputText value="#{bundle.ViewUserConnexionLabel_password}"/>
+                        <h:outputText value="#{userConnexionController.selected.password}" title="#{bundle.ViewUserConnexionTitle_password}"/>
+                        <h:outputText value="#{bundle.ViewUserConnexionLabel_blocked}"/>
+                        <h:outputText value="#{userConnexionController.selected.blocked}" title="#{bundle.ViewUserConnexionTitle_blocked}"/>
+                        <h:outputText value="#{bundle.ViewUserConnexionLabel_nbrCnx}"/>
+                        <h:outputText value="#{userConnexionController.selected.nbrCnx}" title="#{bundle.ViewUserConnexionTitle_nbrCnx}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="UserConnexionViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

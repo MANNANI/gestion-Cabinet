@@ -1,0 +1,198 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:composition template="/indexPatient.xhtml">
+
+        <ui:define name="body">
+
+            <h:form id="formDemande" >
+                <h1><h:outputText value="List demande rendez-vous "/></h1>
+                <p:dataTable value="#{rdvController.items}" var="item" 
+                             paginator="true" 
+                             rowKey="#{item.id}"
+                             rows="10" 
+                             rowsPerPageTemplate="10,20,30,40,50">
+
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Patient"/>
+                        </f:facet>
+                        <h:outputText value="#{item.patient}"/>
+                    </p:column>
+
+                    <p:column sortable="true ">
+                        <f:facet name="header">
+                            <h:outputText value="DateDebut"/>
+                        </f:facet>
+                        <h:outputText value="#{item.dateDebut}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Action"/>
+                        </f:facet>
+                        <p:commandButton id="confirmerRdv" value="Accepter" actionListener="#{rdvController.acceptDemandeRdv(item)}" update="formDemande"/>
+                        <p:commandButton id="DeleteRdv" value="Delete" actionListener="#{rdvController.deleteDemandeRdv(item)}" update="formDemande"/>
+                        <p:commandButton id="Detail" value="Detail" icon="ui-icon-search" actionListener="#{rdvController.detailPatient(item)}" update=":PatientViewForm" oncomplete="PF('PatientViewDialog').show()"/>
+                    </p:column>
+
+
+                </p:dataTable>
+            </h:form>
+            <p:dialog id="PatientViewDlg"  widgetVar="PatientViewDialog" modal="true" resizable="false" appendTo="@(body)" width="40%" header="#{bundle.ViewPatientTitle}">
+                <h:form id="PatientViewForm">
+                    <h:panelGroup id="display">
+                        <b:panel class="panel panel-default">
+                            <div class="container-fluid">
+                                <div class="row well">
+                                    <div class="col-lg-6">
+                                        <div class="col-lg-6 col-md-6">
+                                            <b><h:outputText value="#{bundle.ViewPatientLabel_nom}"/></b>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6">
+                                            <h:outputText value="#{rdvController.selected.patient.nom}" title="#{bundle.ViewPatientTitle_nom}"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="col-lg-6 col-md-6">
+                                            <b><h:outputText value="#{bundle.ViewPatientLabel_prenom}"/></b>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6">
+                                            <h:outputText value="#{rdvController.selected.patient.prenom}" title="#{bundle.ViewPatientTitle_prenom}"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <!--                                <div class="row well">
+                                                                    <div class="col-lg-6 col-md-6">
+                                                                        <h:outputText value="#{bundle.ViewPatientLabel_dateNaissance}"/>
+                                                                    </div>
+                                                                    <div class="col-lg-6 col-md-6">
+                                                                        <h:outputText value="#{rdvController.selected.patient.dateNaissance}" title="#{bundle.ViewPatientTitle_dateNaissance}">
+                                                                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                                                                        </h:outputText>
+                                                                    </div>
+                                                                </div>-->
+
+                                <div class="row well">
+                                    <div class="col-lg-7">
+                                        <div class="col-lg-6 col-md-6">
+                                            <b> <h:outputText value="#{bundle.ViewPatientLabel_dateNaissance}"/></b>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6">
+                                            <h:outputText value="#{rdvController.selected.patient.dateNaissance}" title="#{bundle.ViewPatientTitle_dateNaissance}">
+                                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                                            </h:outputText>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-5">
+                                        <div class="col-lg-6 col-md-6">
+                                            <b> <h:outputText value="#{bundle.ViewPatientLabel_adresse}"/></b>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6">
+                                            <h:outputText value="#{rdvController.selected.patient.adresse}" title="#{bundle.ViewPatientTitle_adresse}"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row well">
+                                    <div class="col-lg-7">
+                                        <div class="col-lg-6 col-md-6">
+                                            <b><h:outputText value="#{bundle.ViewPatientLabel_gender}"/></b>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6">
+                                            <h:outputText value="#{rdvController.selected.patient.gender}" title="#{bundle.ViewPatientTitle_gender}"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-5">
+                                        <div class="col-lg-6 col-md-6">
+                                            <b><h:outputText value="#{bundle.ViewPatientLabel_cin}"/></b>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6">
+                                            <h:outputText value="#{rdvController.selected.patient.cin}" title="#{bundle.ViewPatientTitle_cin}"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <!--                                <div class="row well">
+                                                                    <div class="col-lg-6 col-md-6">
+                                                                        <h:outputText value="#{bundle.ViewPatientLabel_adresse}"/>
+                                                                    </div>
+                                                                    <div class="col-lg-6 col-md-6">
+                                                                        <h:outputText value="#{rdvController.selected.patient.adresse}" title="#{bundle.ViewPatientTitle_adresse}"/>
+                                                                    </div>
+                                                                </div>-->
+                            </div>
+                        </b:panel>
+                        <p:commandButton value="#{bundle.Close}" onclick="PatientViewDialog.hide()"/>
+                    </h:panelGroup>
+                </h:form>
+            </p:dialog>
+               <style type="text/css">
+                .fc{
+                    background-color: #cbd8ed;
+                    /*                    color: #1C4A5A;*/
+                    /*                    font-family: 'Cursive', sans-serif;*/
+                }
+                .souligne
+                {
+                    text-decoration: underline ;
+                    font-family: Comic Sans MS;
+                    color: #092047;
+                    right: 300px;
+                }
+                .ui-datatable{
+                    border-style: groove;
+                    border-color: #1C4A5A;
+                    border-radius: 12px;
+                    color: #1C4A5A;
+                    font-family: 'Cursive', sans-serif;
+                }
+                .ui-dialog{
+                    border-style: double;
+                    border-color: #00733e;
+                    border-radius: 12px;  
+                }
+                .ui-dialog-titlebar{
+                    background-color: #0cb8b6;
+                    color: #1C4A5A;
+                    font-family: 'Cursive', sans-serif;
+                    -webkit-border-radius: 1em;
+                }
+                .ui-button{
+                   background-color: #0cb8b6;  
+                   color: #1C4A5A;
+                    font-family: 'Cursive', sans-serif;
+                    -webkit-border-radius: 1em;
+                }
+                .b{
+                    background-color: #4a6087;
+                }
+                .ui-paginator{
+                    background-color: #0cb8b6;  
+                   color: #1C4A5A;
+                    font-family: 'Cursive', sans-serif;
+                    
+                }
+                
+
+
+
+            </style>
+        </ui:define>
+    </ui:composition>
+</html>
+

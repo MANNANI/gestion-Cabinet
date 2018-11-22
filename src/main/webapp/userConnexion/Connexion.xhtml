@@ -1,0 +1,125 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta name="description" content=""/>
+        <meta name="author" content=""/> 
+        <meta name="keywords" content="free website templates, free bootstrap themes, free template, free bootstrap, free website template"/>
+        <h:outputStylesheet name="med/css/font-awesome.min.css"/>
+        <h:outputStylesheet name="med/css/bootstrap.min.css"/>
+        <h:outputStylesheet name="med/css/style.css"/>
+
+        <h:outputStylesheet library="font-awesome" name="css/font-awesome.css"/>
+        <h:outputStylesheet library="font-awesome" name="css/font-awesome.min.css"/>
+
+        <h:outputStylesheet  name="css/styleInscreption.css"/>
+        <h:outputStylesheet  name="css/style_1.css"/>
+
+    </h:head>
+    <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+
+        <section id="banner" class="banner">
+            <div class="bg-color">
+                <nav class="navbar navbar-default navbar-fixed-top" style=" background-color: #1C4A5A;">
+                    <div class="container">
+                        <div class="col-md-12">
+                            <div class="navbar-header">
+
+                                <a class="navbar-brand" href="#">
+                                    <p:graphicImage value="/resources/med/img/logo.png" class="img-responsive" style="width: 140px; margin-top: -16px;" />
+                                    <!--<img src="/med/img/logo.png" class="img-responsive" style="width: 140px; margin-top: -16px;"/>-->
+                                </a>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </nav>
+                <div class="container">
+                    <div class="row">
+                        <div class="login-wrap">
+                            <div class="login-html">
+                                <input id="tab-1" type="radio" name="tab" class="sign-in"/><label for="tab-1" class="tab">Se connecter</label>
+                                <input id="tab-2" type="radio" name="tab" class="sign-up"/><label for="tab-2" class="tab"> inscription</label>
+                                <div class="login-form">
+                                    <div class="sign-in-htm">
+                                        <h:form>
+
+                                            <div class="group">
+                                                <label for="user" class="label">Username</label>
+                                                <b:inputText id="login" class="input"    value="#{userConnexionController.selected.login}"  placeholder="username"/>
+
+                                            </div>
+                                            <div class="group">
+                                                <label for="pass" class="label">Password</label>
+                                                <b:inputSecret class="input"  id="password" value="#{userConnexionController.selected.password}"  />
+                                            </div>
+                                            <div class="group">
+                                                <input id="check" type="checkbox" class="check" />
+                                                <label for="check"><span class="icon"></span> Keep me Signed in</label>
+                                            </div>
+                                            <!--<div class="group">-->
+                                            <b:commandButton  value="sign in" action="#{userConnexionController.connectionUser()}"/>
+                                            <!--</div>-->
+                                        </h:form>
+
+                                        <div class="hr"></div>
+                                        <div class="foot-lnk">
+                                            <!--                                            <a href="/mdpOublie.xhtml" >Forgot Password?</a>-->
+                                            <p:commandLink value="Forgot Password?" action="/userConnexion/mdpOublie.xhtml" />
+                                        </div>
+                                    </div>
+                                    <div class="sign-up-htm">
+                                        <h:form>
+                                            <div class="group">
+                                                <label for="user" class="label">Username</label>
+                                                <b:inputText id="name" class="input"    value="#{userConnexionController.demande.nom}"  placeholder="username"/>
+                                            </div>
+                                            <div class="group">
+                                                <label for="prenom" class="label">prenom</label>
+                                                <b:inputText id="prenom" class="input"    value="#{userConnexionController.demande.prenom}"  placeholder="prenom"/>
+                                            </div>
+                                            <div class="group">
+                                                <label for="fonction" class="label">FONCTION</label>
+                                                <!--<b:inputText id="fonction" class="input"    value="#{userConnexionController.demande.fonction}"  placeholder="Fonction"/>-->
+                                                <b:selectOneMenu class="input" value="#{userConnexionController.demande.fonction}"   >
+                                                    <f:selectItem value="Patient"  itemLabel="Patient"/>
+                                                    <f:selectItem value="Medecin"   itemLabel="Medecin"/>
+                                                </b:selectOneMenu>
+
+                                            </div>
+                                            <div class="group">
+                                                <label for="email" class="label">Email Address</label>
+                                                <b:inputText id="email" class="input"    value="#{userConnexionController.demande.email}"  placeholder="EMAIL"/>
+                                            </div>
+                                            <div class="group">
+                                                <b:commandButton  value="sign in" icon=" fa fa-sign-in" class="btn btn-primary" actionListener="#{userConnexionController.demandeCreation()}"/>
+                                            </div>
+                                        </h:form>
+                                        <div class="hr"></div>
+                                        <div class="foot-lnk">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <h:outputScript name="med/js/jquery.min.js"/>
+        <h:outputScript name="med/js/jquery.easing.min.js"/>
+        <h:outputScript name="med/js/bootstrap.min.js"/>
+        <h:outputScript name="med/js/custom.js"/>
+        <h:outputScript name="med/js/custom.js"/>
+    </body>
+</html>
+

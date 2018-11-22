@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
+
+    <ui:composition  template="indexPatient.xhtml">
+
+        <p:dialog id="EmployeViewDlg" widgetVar="EmployeViewDialog" modal="true" resizable="false" width="60%" appendTo="@(body)" >
+            <h:form id="EmployeViewForm2">
+                <h:panelGroup id="display">
+                    <b:panel class="panel panel-default">
+                        <div class="container-fluid">
+                            <div class="row well well-lg">
+                                <p:graphicImage library="img" class="center-block" name="default-user-image.png" width="100px" height="100px" style="border-radius: 100%;"/>
+                            </div>
+                            <div class="row well">
+                                <div class="col-lg-6">
+                                    <div class="col-lg-6 col-md-6">
+                                        <b><h:outputText value="#{bundle.ViewEmployeLabel_nom}"/></b>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6">
+                                        <h:outputText value="#{employeController.selected.nom}" title="#{bundle.ViewEmployeTitle_nom}"/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="col-lg-6 col-md-6">
+                                        <b> <h:outputText value="#{bundle.ViewEmployeLabel_prenom}"/></b>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6">
+                                        <h:outputText value="#{employeController.selected.prenom}" title="#{bundle.ViewEmployeTitle_prenom}"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row well">
+                                <div class="col-lg-6">
+                                    <div class="col-lg-6 col-md-6">
+                                        <b><h:outputText value="#{bundle.ViewEmployeLabel_dateNaissance}"/></b>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6">
+                                        <h:outputText value="#{employeController.selected.dateNaissance}" title="#{bundle.ViewEmployeTitle_dateNaissance}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                                        </h:outputText>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="col-lg-6 col-md-6">
+                                        <b> <h:outputText value="#{bundle.ViewEmployeLabel_cin}"/></b>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6">
+                                        <h:outputText value="#{employeController.selected.cin}" title="#{bundle.ViewEmployeTitle_cin}"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row well">
+                                <div class="col-lg-6">
+                                    <div class="col-lg-6 col-md-6">
+                                        <b> <h:outputText value="#{bundle.ViewEmployeLabel_tel}"/></b>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6">
+                                        <h:outputText value="#{employeController.selected.tel}" title="#{bundle.ViewEmployeTitle_tel}"/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="col-lg-6 col-md-6">
+                                        <b> <h:outputText value="#{bundle.ViewEmployeLabel_email}"/></b>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6">
+                                        <h:outputText value="#{employeController.selected.email}" title="#{bundle.ViewEmployeTitle_email}"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </b:panel>
+                    <p:commandButton value="#{bundle.Close}" onclick="EmployeViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

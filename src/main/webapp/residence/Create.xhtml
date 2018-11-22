@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ResidenceCreateDlg" widgetVar="ResidenceCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateResidenceTitle}">
+            <h:form id="ResidenceCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{residenceController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateResidenceLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{residenceController.selected.id}" title="#{bundle.CreateResidenceTitle_id}" />
+                        <p:outputLabel value="#{bundle.CreateResidenceLabel_pays}" for="pays" />
+                        <p:inputText id="pays" value="#{residenceController.selected.pays}" title="#{bundle.CreateResidenceTitle_pays}" />
+                        <p:outputLabel value="#{bundle.CreateResidenceLabel_ville}" for="ville" />
+                        <p:inputText id="ville" value="#{residenceController.selected.ville}" title="#{bundle.CreateResidenceTitle_ville}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{residenceController.create}" value="#{bundle.Save}" update="display,:ResidenceListForm:datalist,:growl" oncomplete="handleSubmit(args,'ResidenceCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ResidenceCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

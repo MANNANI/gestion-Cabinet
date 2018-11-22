@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MargeNonBloquanteViewDlg" widgetVar="MargeNonBloquanteViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewMargeNonBloquanteTitle}">
+            <h:form id="MargeNonBloquanteViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{margeNonBloquanteController.selected != null}">
+                        <h:outputText value="#{bundle.ViewMargeNonBloquanteLabel_id}"/>
+                        <h:outputText value="#{margeNonBloquanteController.selected.id}" title="#{bundle.ViewMargeNonBloquanteTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewMargeNonBloquanteLabel_dateDebut}"/>
+                        <h:outputText value="#{margeNonBloquanteController.selected.dateDebut}" title="#{bundle.ViewMargeNonBloquanteTitle_dateDebut}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewMargeNonBloquanteLabel_dateFin}"/>
+                        <h:outputText value="#{margeNonBloquanteController.selected.dateFin}" title="#{bundle.ViewMargeNonBloquanteTitle_dateFin}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewMargeNonBloquanteLabel_color}"/>
+                        <h:outputText value="#{margeNonBloquanteController.selected.color}" title="#{bundle.ViewMargeNonBloquanteTitle_color}"/>
+                        <h:outputText value="#{bundle.ViewMargeNonBloquanteLabel_medecin}"/>
+                        <h:outputText value="#{margeNonBloquanteController.selected.medecin}" title="#{bundle.ViewMargeNonBloquanteTitle_medecin}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="MargeNonBloquanteViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

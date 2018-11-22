@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    
+        <p:dialog id="EmployeCreateDlg" widgetVar="EmployeCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateEmployeTitle}">
+            <h:form id="EmployeCreateForm">
+                <h:panelGroup id="display">
+             <ui:composition>
+
+        <p:dialog id="EmployeCreateDlg" widgetVar="EmployeCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateEmployeTitle}">
+            <h:form id="EmployeCreateForm">
+                <h:panelGroup id="display">
+                    <h:outputText value="choisir votre employe a creer :" />
+                    <p:selectOneMenu id="typeEmployee" value="#{employeController.type}">
+                        <f:selectItem itemValue="Medecin" itemLabel="Medecin"></f:selectItem>
+                        <f:selectItem itemValue="AdminSecretaire" itemLabel="Secretaire d 'admin">
+                        </f:selectItem>
+                        <f:selectItem itemValue="MedecinSecretaire" itemLabel="Secretaire de medecin">
+                        </f:selectItem>
+                        <f:selectItem itemValue="Admin" itemLabel="Admin"></f:selectItem>
+                        <p:ajax  listener="#{employeController.combo()}" />
+                    </p:selectOneMenu>
+
+                    <p:panelGrid columns="2" rendered="#{employeController.selected != null}">
+                       
+                        <p:outputLabel value="#{bundle.CreateEmployeLabel_dateNaissance}" for="dateNaissance" />
+                        <p:calendar id="dateNaissance" pattern="MM/dd/yyyy" value="#{employeController.selected.dateNaissance}" title="#{bundle.EditEmployeTitle_dateNaissance}"  showOn="button"/>
+
+                        <p:outputLabel value="#{bundle.CreateEmployeLabel_cin}" for="cin" />
+                        <p:inputText id="cin" value="#{employeController.selected.cin}" title="#{bundle.CreateEmployeTitle_cin}" />
+
+                        <p:outputLabel value="#{bundle.CreateEmployeLabel_tel}" for="tel" />
+                        <p:inputText id="tel" value="#{employeController.selected.tel}" title="#{bundle.CreateEmployeTitle_tel}" />
+
+                        <p:outputLabel value="#{bundle.CreateEmployeLabel_email}" for="email" />
+                        <p:inputText id="email" value="#{employeController.selected.email}" title="#{bundle.CreateEmployeTitle_email}" />
+
+                        <p:outputLabel value="#{bundle.CreateEmployeLabel_nom}" for="nom" />
+                        <p:inputText id="nom" value="#{employeController.selected.nom}" title="#{bundle.CreateEmployeTitle_nom}" />
+
+                        <p:outputLabel value="#{bundle.CreateEmployeLabel_prenom}" for="prenom" />
+                        <p:inputText id="prenom" value="#{employeController.selected.prenom}" title="#{bundle.CreateEmployeTitle_prenom}" />
+
+                        <p:outputLabel value="#{bundle.CreateEmployeLabel_user_login}" for="login" />
+                        <p:inputText id="login" value="#{employeController.login}" title="#{bundle.CreateUserConnexionTitle_login}" />
+
+                        <p:outputLabel value="#{bundle.CreateEmployeLabel__user_password}" for="password" />
+                        <p:password id="password" value="#{employeController.password}" title="#{bundle.CreateUserConnexionTitle_password}" />
+                        <p:dialog id="medSecCombo" widgetVar="ComboMedSec" visible="false">
+                        <p:outputLabel value="Medecin" for="MedS"/>
+                        <p:selectOneMenu id="MedS" value="#{employeController.medecine}" >
+                            <f:selectItems value="#{medecinController.itemsAvailableSelectOne}"
+                                           var="medecinItem"
+                                           itemValue="#{medecinItem}"/>
+                        </p:selectOneMenu>
+                        </p:dialog>
+                        <p:dialog id="medCombo" widgetVar="ComboMed" visible="false">
+                          <p:outputLabel value="#{bundle.CreateMedecinLabel_configuration}" for="configuration" />
+                          <p:selectOneMenu id="configuration" value="#{employeController.configuration}" >
+                            <f:selectItems value="#{configurationController.itemsAvailableSelectOne}"
+                                           var="configurationItem"
+                                           itemValue="#{configurationItem}"/>
+                        </p:selectOneMenu>
+                           <p:outputLabel value="#{bundle.CreateMedecinLabel_specialite}" for="specialite" />
+                           <p:selectOneMenu id="specialite" value="#{employeController.specialite}" >
+                            <f:selectItems value="#{specialiteController.itemsAvailableSelectOne}"
+                                           var="specialiteItem"
+                                           itemValue="#{specialiteItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateMedecinLabel_residence}" for="residence" />
+                        <p:selectOneMenu id="residence" value="#{employeController.residence}" >
+                            <f:selectItems value="#{residenceController.itemsAvailableSelectOne}"
+                                           var="residenceItem"
+                                           itemValue="#{residenceItem}"/>
+                        </p:selectOneMenu>
+                          
+                        </p:dialog>
+                        
+                    </p:panelGrid>
+
+                    <p:commandButton actionListener="#{employeController.create}" value="#{bundle.Save}" update="display,:EmployeListForm:datalist,:growl" oncomplete="handleSubmit(args,'EmployeCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="EmployeCreateDialog.hide()"/>
+
+                </h:panelGroup>
+
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

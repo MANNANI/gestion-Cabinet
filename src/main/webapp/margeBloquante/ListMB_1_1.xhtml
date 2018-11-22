@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
+
+    <h:head><f:facet name="first">
+            <meta charset="utf-8"/>
+            <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        </f:facet>
+
+        <f:facet name="seconde">
+            <h:outputStylesheet name="/bootstrap-3.3.7-dist/css/bootstrap.css"/>
+
+            <h:outputStylesheet  name="/bootstrap-3.3.7-dist/js/bootstrap.js"/>
+        </f:facet>
+
+        <h:outputScript name="/inscription/javascript.js"/>
+
+        <script src="https://use.fontawesome.com/83907fc2f8.js"></script>
+        <!--<link href="css/navbar-fixed-side.css" rel="stylesheet" />-->
+
+        <h:outputStylesheet library="bootstrap-3.3.7-dist" name="css/bootstrap.min.css"/>
+        <h:outputScript library="bootstrap-3.3.7-dist" name="js/bootstrap.min.js"/>
+
+        <h:outputStylesheet library="font-awesome" name="css/font-awesome.css"/>
+        <h:outputStylesheet library="font-awesome" name="css/font-awesome.min.css"/>
+
+        <h:outputStylesheet library="css" name="styleInscreption.css"/>
+        <h:outputScript name="js/jsInsecription.js"/>
+
+
+    </h:head>
+    <h:body>
+        <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+            <a href="../inscription/insecr.xhtml" ><p:outputLabel class="fa fa-user" value="Profil"/></a>
+            <a href="../calendar/Agenda.xhtml"><p:outputLabel class="fa fa-calendar" value="Agenda" /></a>
+        </div>
+
+        <div id="main">
+            <div class="container-fluid">
+                <div class="row">
+                    <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; open</span>
+                    <div style="float: right">
+                        <p:commandButton value="déconnecter" icon="fa fa-sign-out" class="btn btn-default" action="#{medecinController1.signOut()}" />
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12">
+                        <b:panel style="float: left;margin-top: 20px;" class="col-lg-12 col-md-12" tooltipPosition="left" look="info">
+                            <h2 >La Liste des marges bloquantes :</h2>
+
+                            <b:dataTable value="#{margeBloquanteController.items}" var="item" 
+                                         page-length="5"
+                                         page-length-menu="5,10,20"
+                                         >
+                                <b:dataTableColumn value="#{item.id}"/>
+                                <b:dataTableColumn value="#{item.dateDebut}" />
+                                <b:dataTableColumn value="#{item.dateFin}" />
+                                <b:dataTableColumn value="#{item.medecin}" />
+
+
+                            </b:dataTable>
+                            <p:commandButton id="delet" icon="ui-icon-plus" class="btn btn-primary col-lg-2" value="delet" actionListener="#{margeBloquanteController.destroy}" />
+
+                        </b:panel>
+
+                        <div class="container-fluid">
+
+
+                            <div class="row">
+                                <b:panel style="float: left;margin-top: 20px;" class="col-lg-12 col-md-12" tooltipPosition="left" look="info">
+                                    <h2 >Creations Des Marges :</h2>
+                                    <b:panel class="col-lg-6 col-md-12 " style="margin: 20px 0 20px 0;">
+                                        <h3 >1.Creation de la marge:</h3>
+                                        <p:outputLabel value="Date Debut :"/><br></br>
+                                        <b:dateTimePicker id="datedebut" class="text-justify ui-widget "  value="#{margeBloquanteController.selected.dateDebut}" />
+                                        <p:outputLabel value="Date Fin:"/><br></br>
+                                        <b:dateTimePicker id="dateFin" class="text-justify ui-widget "  value="#{margeBloquanteController.selected.dateFin}" />
+                                    </b:panel>
+                                    <b:panel class="col-lg-6 col-md-12 " style="margin: 20px 0 20px 0;">
+                                        <h3 >2.Creation des marges items :</h3>
+                                        <p:outputLabel value="Date Debut :"/><br></br>
+                                        <b:dateTimePicker id="datedebut1" class="text-justify ui-widget "  value="#{margeBloquanteController.margeItem.heureDebut}" />
+<!--<p:calendar id="datedebut" class="text-justify ui-widget " pattern="HH:mm" value="#{margeBloquanteController.margeItem.heureDebut}" size="60" />-->
+                                        <!--                                        <h:outputText value="{margeBloquanteController.margeItem.heureDebut}">
+                                                                                    <f:convertDateTime pattern="HH:mm"  />
+                                                                                </h:outputText>-->
+                                        <!-- <pe:timePicker value="{margeBloquanteController.margeItem.heureDebut}" mode="popup" widgetVar="popupTimeWidget"  
+                                                           label="Popup time picker"/> 
+                                                                                <br></br>-->
+                                        <p:outputLabel value="Date Fin:"/><br></br>
+                                        <b:dateTimePicker id="dateFin1" class="text-justify ui-widget "  value="#{margeBloquanteController.margeItem.heureFin}" />
+                                        <!--<p:calendar id="dateFin" class="text-justify ui-widget " pattern="HH:MM" size="79" />-->
+
+                                        <!--                                        <h:outputText value="{margeBloquanteController.margeItem.heureFin}">
+                                                                                    <f:convertDateTime pattern="HH:mm"  />
+                                                                                </h:outputText>-->
+                                        <p:outputLabel value="jour:"/><br></br>
+                                        <b:inputText id="jour" value="#{margeBloquanteController.margeItem.jour}" />
+                                        <p:outputLabel value="mois:"/><br></br>
+                                        <b:inputText id="jour" value="#{margeBloquanteController.margeItem.mois}" />
+                                        <p:outputLabel value="annee:"/><br></br>
+                                        <b:inputText id="jour" value="#{margeBloquanteController.margeItem.annee}" />
+
+                                    </b:panel>
+                                    <p:commandButton actionListener="#{margeBloquanteController.createMargeItem()}" value="Save" icon="ui-icon-plus" class="btn btn-primary col-lg-2" update=":margeitems"/>
+
+                                </b:panel>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12">
+
+                                <b:panel style="float: left;margin-top: 20px;" class="col-lg-12 col-md-12" tooltipPosition="left" look="info">
+                                    <h2 >La Liste Des Marges items :</h2>
+
+                                    <b:dataTable value="#{margeBloquanteController.margeItems}" var="item" 
+                                                 page-length="5"
+                                                 page-length-menu="5,10,20"
+                                                 id="margeitems"
+                                                 >
+                                        <b:dataTableColumn value="#{item.heureDebut}"/>
+                                        <b:dataTableColumn value="#{item.heureFin}" />
+                                        <b:dataTableColumn value="#{item.jour}" />
+                                        <b:dataTableColumn value="#{item.mois}" />
+                                        <b:dataTableColumn value="#{item.annee}" />
+
+
+                                    </b:dataTable>
+                                    <p:commandButton id="SAVE" icon="ui-icon-plus" class="btn btn-primary col-lg-2" value="SAVE" actionListener="#{margeBloquanteController.create()}" />
+                                    <p:commandButton id="delet" icon="ui-icon-plus" class="btn btn-primary col-lg-2" value="delet" actionListener="#{margeBloquanteController.destroy}" />
+
+                                </b:panel>
+                                <!--            <div class="row">
+                                                <div class="col-lg-6">
+                                                    
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    
+                                                </div>
+                                
+                                            </div>-->
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </h:body>
+
+</html>
